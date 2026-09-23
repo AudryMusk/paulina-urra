@@ -1,0 +1,68 @@
+import Link from "next/link";
+import { ArrowUpRight, Bell, Inbox, LogOut } from "lucide-react";
+import { requireUser } from "@/lib/backoffice/auth";
+import { externalUrl } from "@/lib/backoffice/model";
+import { logout } from "./actions";
+
+export async function AdminShell({ active, children }: { active: "demandes" | "relances"; children: React.ReactNode }) {
+  const user = await requireUser();
+  const agenda = externalUrl(process.env.CALNODE_ADMIN_URL);
+  return (
+    <div className="bo-shell">
+      <a className="bo-skip" href="#contenu">
+        Aller au contenu
+      </a>
+      <aside className="bo-sidebar">
+        <Link href="/admin" className="bo-brand">
+          <span>ÉQUIPE</span>
+          <strong>URRA-RAUDA</strong>
+          <small>Espace courtiers</small>
+        </Link>
+        <nav aria-label="Navigation du back-office">
+          <Link href="/admin" aria-current={active === "demandes" ? "page" : undefined}>
+            <Inbox size={20} />
+            Demandes
+          </Link>
+          <Link href="/admin/relances" aria-current={active === "relances" ? "page" : undefined}>
+            <Bell size={20} />
+            Relances
+          </Link>
+          {agenda && (
+            <a href={agenda} target="_blank" rel="noreferrer">
+              Agenda Calnode
+              <ArrowUpRight size={18} />
+              <span className="bo-sr"> (nouvel onglet)</span>
+            </a>
+          )}
+        </nav>
+        <div className="bo-account">
+          <span className="bo-avatar">{user.name.slice(0, 1)}</span>
+          <div>
+            <strong>{user.name}</strong>
+            <small>Équipe Urra-Rauda</small>
+          </div>
+          <form action={logout}>
+            <button className="bo-icon-button" aria-label="Se déconnecter">
+              <LogOut size={19} />
+            </button>
+          </form>
+        </div>
+      </aside>
+      <main id="contenu" className="bo-main">
+        {children}
+      </main>
+    </div>
+  );
+}
+export function DateLabel({ value, dateOnly = false }: { value: string; dateOnly?: boolean }) {
+  const date = dateOnly ? new Date(value + "T12:00:00Z") : new Date(value);
+  return (
+    <time dateTime={value}>
+      {new Intl.DateTimeFormat("fr-CA", {
+        timeZone: "America/Toronto",
+        dateStyle: "medium",
+        ...(dateOnly ? {} : { timeStyle: "short" as const }),
+      }).format(date)}
+    </time>
+  );
+}

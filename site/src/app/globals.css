@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+}
+
+@theme {
+  --color-red: #e11b2f;
+  --color-red-soft: #fdeeef;
+  --color-blue: #0b4ea2;
+  --color-blue-soft: #eef3fb;
+  --color-navy: #0a1b3d;
+  --color-ink: #131722;
+  --color-ink-soft: #2a2e38;
+  --color-slate: #3f4450;
+  --color-muted: #5b6170;
+  --color-line: #e3e5ea;
+  --color-line-strong: #d5dae3;
+  --color-paper: #ffffff;
+  --color-mist: #f3f5f8;
+  --color-night: #0b0b0d;
+
+  --ease-doux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-descendre: descendre 0.9s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-entrer-droite: entrer-droite 0.8s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-entrer-gauche: entrer-gauche 0.8s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-rideau: rideau 1.3s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-fondu: fondu 0.7s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-zoom-lent: zoom-lent 2.4s var(--ease-doux) var(--delai, 0ms) both;
+  --animate-pop: pop 0.35s var(--ease-doux) var(--delai, 0ms) both;
+
+  @keyframes descendre {
+    from {
+      opacity: 0;
+      transform: translateY(-32px);
+    }
+  }
+
+  @keyframes entrer-droite {
+    from {
+      opacity: 0;
+      transform: translateX(64px);
+    }
+  }
+
+  @keyframes entrer-gauche {
+    from {
+      opacity: 0;
+      transform: translateX(-64px);
+    }
+  }
+
+  @keyframes rideau {
+    from {
+      clip-path: inset(0 0 0 100%);
+    }
+  }
+
+  @keyframes fondu {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes zoom-lent {
+    from {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    60% {
+      transform: scale(1.12);
+    }
+  }
+}
+
+@property --delai {
+  syntax: "<time>";
+  inherits: false;
+  initial-value: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply overflow-x-clip bg-paper font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-red text-white;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label:has(input[type="checkbox"]) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
