@@ -20,7 +20,7 @@ export default async function LeadsPage({
   const stats = await summary();
   const href = (page: number) => "/admin?" + new URLSearchParams({ q, status, owner, page: String(page) });
   return (
-    <AdminShell active="demandes">
+    <AdminShell>
       <header className="bo-heading">
         <div>
           <p className="bo-eyebrow">VOTRE ESPACE DE TRAVAIL</p>
@@ -36,10 +36,6 @@ export default async function LeadsPage({
         <Link href="/admin?owner=sans">
           <span>Dossiers à attribuer</span>
           <strong>{stats.unassigned}</strong>
-        </Link>
-        <Link href="/admin/relances">
-          <span>Relances à faire aujourd’hui ou en retard</span>
-          <strong>{stats.due}</strong>
         </Link>
       </div>
       <section className="bo-panel">

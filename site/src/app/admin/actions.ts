@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { SESSION_COOKIE, requireUser } from "@/lib/backoffice/auth";
 import { authenticate, createSession, hashToken, revokeSession, SESSION_SECONDS } from "@/lib/backoffice/identity";
 import { consumeLimit } from "@/lib/backoffice/db";
-import { addNote, addReminder, finishReminder, updateLead } from "@/lib/backoffice/store";
+import { addNote, updateLead } from "@/lib/backoffice/store";
 
 export type FormState = { error?: string; success?: string };
 const field = (data: FormData, key: string) => String(data.get(key) || "").trim();
@@ -72,30 +72,4 @@ export async function saveNote(_: FormState, data: FormData): Promise<FormState>
   }
   revalidatePath("/admin", "layout");
   return { success: "Note ajoutée à l’historique." };
-}
-export async function saveReminder(_: FormState, data: FormData): Promise<FormState> {
-  const user = await requireUser();
-  try {
-    await addReminder(
-      field(data, "id"),
-      field(data, "title"),
-      field(data, "due_date"),
-      field(data, "owner"),
-      user.name,
-    );
-  } catch (error) {
-    return { error: error instanceof Error ? error.message : "Enregistrement impossible." };
-  }
-  revalidatePath("/admin", "layout");
-  return { success: "Relance planifiée." };
-}
-export async function completeReminder(_: FormState, data: FormData): Promise<FormState> {
-  const user = await requireUser();
-  try {
-    await finishReminder(field(data, "id"), user.name);
-  } catch {
-    return { error: "Cette relance est introuvable." };
-  }
-  revalidatePath("/admin", "layout");
-  return { success: "Relance effectuée." };
 }

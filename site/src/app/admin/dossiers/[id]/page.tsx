@@ -2,19 +2,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Mail, Phone } from "lucide-react";
 import { requireUser } from "@/lib/backoffice/auth";
-import { activities, getLead, reminders } from "@/lib/backoffice/store";
-import { montrealToday, statuses } from "@/lib/backoffice/model";
+import { activities, getLead } from "@/lib/backoffice/store";
+import { statuses } from "@/lib/backoffice/model";
 import { AdminShell, DateLabel } from "../../shell";
-import { CompleteButton, FollowupForm, NoteForm, ReminderForm } from "../../forms";
+import { FollowupForm, NoteForm } from "../../forms";
 
 export default async function DossierPage({ params }: { params: Promise<{ id: string }> }) {
-  const user = await requireUser();
+  await requireUser();
   const { id } = await params;
   const lead = await getLead(id);
   if (!lead) notFound();
   const answer = lead.answers;
-  const [history, tasks] = await Promise.all([activities(id), reminders({ leadId: id })]);
-  const today = montrealToday();
+  const history = await activities(id);
   const property = [
     ["Type de propriété", answer.typePropriete],
     ["Adresse", answer.adresse],
@@ -26,7 +25,7 @@ export default async function DossierPage({ params }: { params: Promise<{ id: st
     ["Échéancier", answer.echeancier],
   ];
   return (
-    <AdminShell active="demandes">
+    <AdminShell>
       <Link href="/admin" className="bo-back">
         <ArrowLeft size={18} />
         Toutes les demandes
@@ -103,30 +102,6 @@ export default async function DossierPage({ params }: { params: Promise<{ id: st
           <section className="bo-panel bo-pad">
             <h2>Suivi du dossier</h2>
             <FollowupForm key={lead.version} lead={lead} />
-          </section>
-          <section className="bo-panel bo-pad">
-            <h2>Prochaine relance</h2>
-            <p className="bo-muted bo-small">Les dates sont celles de Montréal.</p>
-            <ReminderForm id={id} owner={lead.owner || user.name} today={today} />
-          </section>
-          <section className="bo-panel bo-pad">
-            <h2>Relances ouvertes</h2>
-            {tasks.length ? (
-              <ul className="bo-reminders">
-                {tasks.map((task) => (
-                  <li key={task.id}>
-                    <strong>{task.title}</strong>
-                    <p className={task.due_date < today ? "bo-overdue" : "bo-muted"}>
-                      <DateLabel value={task.due_date} dateOnly /> · {task.owner}
-                      {task.due_date < today ? " · En retard" : ""}
-                    </p>
-                    <CompleteButton id={task.id} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="bo-muted">Aucune relance en attente pour ce dossier.</p>
-            )}
           </section>
         </div>
       </div>

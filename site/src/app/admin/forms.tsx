@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { completeReminder, login, saveFollowup, saveNote, saveReminder, type FormState } from "./actions";
+import { login, saveFollowup, saveNote, type FormState } from "./actions";
 import { statuses } from "@/lib/backoffice/model";
 import type { Lead } from "@/lib/backoffice/store";
 
@@ -97,47 +97,6 @@ export function NoteForm({ id }: { id: string }) {
       <button className="bo-button bo-secondary" disabled={pending}>
         {pending ? "Enregistrement…" : "Ajouter la note"}
       </button>
-    </form>
-  );
-}
-export function ReminderForm({ id, owner, today }: { id: string; owner: string; today: string }) {
-  const [state, action, pending] = useActionState(saveReminder, {});
-  return (
-    <form action={action} className="bo-form">
-      <input type="hidden" name="id" value={id} />
-      <label>
-        Action à effectuer
-        <input name="title" maxLength={200} placeholder="Ex. Faire le point après l’évaluation" required />
-      </label>
-      <div className="bo-two">
-        <label>
-          Date de relance
-          <input name="due_date" type="date" defaultValue={today} required />
-        </label>
-        <label>
-          Responsable
-          <select name="owner" defaultValue={owner || "Paulina"}>
-            <option>Paulina</option>
-            <option>Denis</option>
-          </select>
-        </label>
-      </div>
-      <Feedback state={state} />
-      <button className="bo-button" disabled={pending}>
-        {pending ? "Enregistrement…" : "Planifier la relance"}
-      </button>
-    </form>
-  );
-}
-export function CompleteButton({ id }: { id: string }) {
-  const [state, action, pending] = useActionState(completeReminder, {});
-  return (
-    <form action={action}>
-      <input type="hidden" name="id" value={id} />
-      <button className="bo-button bo-secondary" disabled={pending}>
-        {pending ? "Enregistrement…" : "Marquer effectuée"}
-      </button>
-      <Feedback state={state} />
     </form>
   );
 }

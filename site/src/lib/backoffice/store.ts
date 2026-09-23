@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { Reponses } from "../evaluation";
 import { erreurEtape, NOMBRE_QUESTIONS } from "../evaluation";
 import { query, transaction, type Query } from "./db";
-import { montrealToday, owners, statuses, validDate, type Owner, type Status } from "./model";
+import { owners, statuses, type Owner, type Status } from "./model";
 
 export type Lead = {
   id: string;
@@ -15,15 +15,6 @@ export type Lead = {
   updated_at: string;
 };
 export type Activity = { id: string; author: string; body: string; created_at: string };
-export type Reminder = {
-  id: string;
-  lead_id: string;
-  title: string;
-  due_date: string;
-  owner: Owner;
-  completed_at: string | null;
-  client: string;
-};
 export class Conflict extends Error {}
 
 const LEAD_COLUMNS = "id, answers, status, owner, next_action, version, created_at, updated_at";
@@ -142,66 +133,11 @@ export async function activities(id: string) {
   );
 }
 
-export async function addReminder(id: string, title: string, due: string, owner: string, author: string) {
-  if (!title.trim() || title.length > 200 || !validDate(due) || !["Paulina", "Denis"].includes(owner)) {
-    throw new Error("Indiquez une action, une date valide et un responsable.");
-  }
-  return transaction(async (q) => {
-    const [lead] = await q<{ id: string }>("SELECT id FROM leads WHERE id = $1", [id]);
-    if (!lead) throw new Error("Dossier introuvable.");
-    const reminderId = randomUUID();
-    await q("INSERT INTO reminders(id, lead_id, title, due_date, owner, created_at) VALUES ($1, $2, $3, $4, $5, $6)", [
-      reminderId,
-      id,
-      title.trim(),
-      due,
-      owner,
-      new Date().toISOString(),
-    ]);
-    await history(q, id, author, `Relance prévue le ${due} · ${owner} · ${title.trim()}`);
-    return reminderId;
-  });
-}
-
-export async function finishReminder(id: string, author: string) {
-  return transaction(async (q) => {
-    const [row] = await q<{ lead_id: string; title: string; completed_at: string | null }>(
-      "SELECT lead_id, title, completed_at FROM reminders WHERE id = $1 FOR UPDATE",
-      [id],
-    );
-    if (!row) throw new Error("Relance introuvable.");
-    if (row.completed_at) return;
-    await q("UPDATE reminders SET completed_at = $1 WHERE id = $2", [new Date().toISOString(), id]);
-    await history(q, row.lead_id, author, "Relance effectuée : " + row.title);
-  });
-}
-
-export async function reminders(filters: { leadId?: string; owner?: string; completed?: boolean } = {}) {
-  const clauses = [filters.completed ? "r.completed_at IS NOT NULL" : "r.completed_at IS NULL"];
-  const params: string[] = [];
-  if (filters.leadId) {
-    params.push(filters.leadId);
-    clauses.push("r.lead_id = $" + params.length);
-  }
-  if (filters.owner && ["Paulina", "Denis"].includes(filters.owner)) {
-    params.push(filters.owner);
-    clauses.push("r.owner = $" + params.length);
-  }
-  return query<Reminder>(
-    `SELECT r.id, r.lead_id, r.title, r.due_date, r.owner, r.completed_at, l.answers->>'nom' AS client
-     FROM reminders r JOIN leads l ON l.id = r.lead_id
-     WHERE ${clauses.join(" AND ")} ORDER BY r.due_date, r.created_at LIMIT 200`,
-    params,
-  );
-}
-
 export async function summary() {
-  const [row] = await query<{ fresh: number; unassigned: number; due: number }>(
+  const [row] = await query<{ fresh: number; unassigned: number }>(
     `SELECT
        (SELECT count(*)::int FROM leads WHERE status = 'nouveau') AS fresh,
-       (SELECT count(*)::int FROM leads WHERE owner = '' AND status NOT IN ('mandat', 'cloture')) AS unassigned,
-       (SELECT count(*)::int FROM reminders WHERE completed_at IS NULL AND due_date <= $1) AS due`,
-    [montrealToday()],
+       (SELECT count(*)::int FROM leads WHERE owner = '' AND status NOT IN ('mandat', 'cloture')) AS unassigned`,
   );
   return row;
 }

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, Bell, Inbox, LogOut } from "lucide-react";
+import { ArrowUpRight, Inbox, LogOut } from "lucide-react";
 import { requireUser } from "@/lib/backoffice/auth";
 import { externalUrl } from "@/lib/backoffice/model";
 import { logout } from "./actions";
 
-export async function AdminShell({ active, children }: { active: "demandes" | "relances"; children: React.ReactNode }) {
+export async function AdminShell({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
   const agenda = externalUrl(process.env.CALNODE_ADMIN_URL);
   return (
@@ -19,13 +19,9 @@ export async function AdminShell({ active, children }: { active: "demandes" | "r
           <small>Espace courtiers</small>
         </Link>
         <nav aria-label="Navigation du back-office">
-          <Link href="/admin" aria-current={active === "demandes" ? "page" : undefined}>
+          <Link href="/admin" aria-current="page">
             <Inbox size={20} />
             Demandes
-          </Link>
-          <Link href="/admin/relances" aria-current={active === "relances" ? "page" : undefined}>
-            <Bell size={20} />
-            Relances
           </Link>
           {agenda && (
             <a href={agenda} target="_blank" rel="noreferrer">
@@ -54,15 +50,14 @@ export async function AdminShell({ active, children }: { active: "demandes" | "r
     </div>
   );
 }
-export function DateLabel({ value, dateOnly = false }: { value: string; dateOnly?: boolean }) {
-  const date = dateOnly ? new Date(value + "T12:00:00Z") : new Date(value);
+export function DateLabel({ value }: { value: string }) {
   return (
     <time dateTime={value}>
       {new Intl.DateTimeFormat("fr-CA", {
         timeZone: "America/Toronto",
         dateStyle: "medium",
-        ...(dateOnly ? {} : { timeStyle: "short" as const }),
-      }).format(date)}
+        timeStyle: "short",
+      }).format(new Date(value))}
     </time>
   );
 }

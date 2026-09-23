@@ -39,17 +39,6 @@ CREATE TABLE IF NOT EXISTS activities (
   created_at TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS reminders (
-  id TEXT PRIMARY KEY,
-  lead_id TEXT NOT NULL REFERENCES leads(id),
-  title TEXT NOT NULL,
-  due_date TEXT NOT NULL,
-  owner TEXT NOT NULL,
-  completed_at TEXT,
-  created_at TEXT NOT NULL
-);
-
-CREATE INDEX IF NOT EXISTS reminders_due ON reminders(completed_at, due_date);
 CREATE INDEX IF NOT EXISTS activities_lead ON activities(lead_id, created_at);
 CREATE INDEX IF NOT EXISTS leads_created ON leads(created_at);
 CREATE INDEX IF NOT EXISTS rate_limits_expires ON rate_limits(expires_at);
