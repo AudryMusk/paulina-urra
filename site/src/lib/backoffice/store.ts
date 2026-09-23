@@ -54,10 +54,10 @@ export async function createLead(answers: Reponses, submissionKey: string) {
     );
     if (!created) {
       const [existing] = await q<{ id: string }>("SELECT id FROM leads WHERE submission_key = $1", [submissionKey]);
-      return existing.id;
+      return { id: existing.id, nouveau: false };
     }
     await history(q, created.id, "Formulaire du site", "Demande reçue. Consentement au contact enregistré.");
-    return created.id;
+    return { id: created.id, nouveau: true };
   });
 }
 

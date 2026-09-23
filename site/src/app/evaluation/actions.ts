@@ -4,7 +4,8 @@ import { erreurEtape, NOMBRE_QUESTIONS, type Reponses } from "@/lib/evaluation";
 import { consumeLimit } from "@/lib/backoffice/db";
 import { hashToken } from "@/lib/backoffice/identity";
 import { externalUrl } from "@/lib/backoffice/model";
-import { createLead } from "@/lib/backoffice/store";
+import { addNote, createLead } from "@/lib/backoffice/store";
+import { destinataires, notifierNouvelleDemande } from "@/lib/notification";
 
 type Resultat = { ok: true; rdvUrl: string | null } | { ok: false; message: string };
 
@@ -38,15 +39,29 @@ export async function soumettreEvaluation(entree: Reponses, cleEnvoi: string): P
     if (erreur) return { ok: false, message: erreur };
   }
 
+  let demande: { id: string; nouveau: boolean };
   try {
     const autorise =
       (await consumeLimit("demande:" + hashToken(reponses.courriel.toLowerCase()), 10, 60 * 60_000)) &&
       (await consumeLimit("demande:global", 500, 60 * 60_000));
     if (!autorise) return { ok: false, message: "Trop de demandes rapprochées. Réessayez plus tard ou appelez-nous." };
-    await createLead(reponses, cleEnvoi);
+    demande = await createLead(reponses, cleEnvoi);
   } catch (erreur) {
     console.error("Enregistrement de la demande impossible", erreur);
     return { ok: false, message: "Votre demande n’a pas pu être enregistrée. Réessayez ou appelez-nous directement." };
+  }
+
+  if (demande.nouveau) {
+    const envoi = await notifierNouvelleDemande(demande.id, reponses);
+    if (envoi !== "non-configure") {
+      const trace =
+        envoi === "envoye"
+          ? `Courriel de notification envoyé à ${destinataires().join(", ")}.`
+          : "Le courriel de notification n’a pas pu être envoyé.";
+      await addNote(demande.id, "Site", trace).catch((erreur) =>
+        console.error("Trace de notification impossible", erreur),
+      );
+    }
   }
 
   const webhook = process.env.LEAD_WEBHOOK_URL;
