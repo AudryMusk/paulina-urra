@@ -7,17 +7,24 @@ import { Piliers } from "@/components/home/Piliers";
 import { Proprietes } from "@/components/home/Proprietes";
 import { Services } from "@/components/home/Services";
 import { Temoignages } from "@/components/home/Temoignages";
+import { listerProprietes } from "@/lib/backoffice/proprietes";
+import { versAffichage } from "@/lib/proprietes-affichage";
 
-export default function Accueil() {
+export const revalidate = 3600;
+
+export default async function Accueil() {
+  const proprietes = process.env.DATABASE_URL
+    ? (await listerProprietes({ publieesSeulement: true })).map(versAffichage)
+    : [];
   return (
     <>
-      <SiteHeader />
+      <SiteHeader avecProprietes={proprietes.length > 0} />
       <main>
         <Hero />
         <Piliers />
         <Services />
         <Equipe />
-        <Proprietes />
+        {proprietes.length > 0 && <Proprietes proprietes={proprietes} />}
         <Temoignages />
         <EvaluationCta />
       </main>

@@ -37,66 +37,6 @@ export const reseaux = {
 
 export const telLink = (numero: string) => `tel:+1${numero.replace(/\D/g, "")}`;
 
-export type Propriete = {
-  statut: string;
-  tonalite: "red" | "blue";
-  prix: string;
-  adresse: string;
-  ville: string;
-  villeLongue: string;
-  photo: string;
-  resume: string;
-  details: { cle: string; valeur: string; accent?: boolean }[];
-};
-
-export const proprietes: Propriete[] = [
-  {
-    statut: "Vendu en 21 jours",
-    tonalite: "red",
-    prix: "749 000 $",
-    adresse: "93, rue Monseigneur-Taché",
-    ville: "Boucherville",
-    villeLongue: "Boucherville (Québec)",
-    photo: "/images/maison-1.jpg",
-    resume: "4 ch · 2 sdb · 2 340 pi²",
-    details: [
-      { cle: "Type", valeur: "Maison à paliers multiples" },
-      { cle: "Superficie", valeur: "2 340 pi²" },
-      { cle: "Pièces", valeur: "4 chambres · 2 salles de bain" },
-      { cle: "Prix demandé", valeur: "739 000 $" },
-      { cle: "Écart", valeur: "+ 10 000 $", accent: true },
-    ],
-  },
-  {
-    statut: "Vendue au-dessus du prix demandé",
-    tonalite: "red",
-    prix: "875 000 $",
-    adresse: "66, rue De La Perrière S.",
-    ville: "Boucherville",
-    villeLongue: "Boucherville (Québec)",
-    photo: "/images/maison-2.jpg",
-    resume: "5 ch · 3 sdb · 3 100 pi²",
-    details: [
-      { cle: "Superficie", valeur: "3 100 pi²" },
-      { cle: "Pièces", valeur: "5 chambres · 3 salles de bain" },
-    ],
-  },
-  {
-    statut: "Nouveau sur le marché",
-    tonalite: "blue",
-    prix: "612 000 $",
-    adresse: "412, rue des Tilleuls",
-    ville: "Sainte-Julie",
-    villeLongue: "Sainte-Julie (Québec)",
-    photo: "/images/maison-3.jpg",
-    resume: "3 ch · 2 sdb · 1 890 pi²",
-    details: [
-      { cle: "Superficie", valeur: "1 890 pi²" },
-      { cle: "Pièces", valeur: "3 chambres · 2 salles de bain" },
-    ],
-  },
-];
-
 export const temoignageVedette = {
   citation:
     "« Notre maison était en vente depuis huit mois avec un autre courtier. L'équipe l'a repositionnée, refait les photos, et vendue en trois semaines. »",

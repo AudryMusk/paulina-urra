@@ -3,16 +3,21 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { proprietes, type Propriete } from "@/lib/content";
+import type { Propriete } from "@/lib/proprietes-affichage";
 import { Reveal } from "../Reveal";
 import { Eyebrow, wrap } from "../ui";
 
 const tonalites = { red: "text-red", blue: "text-blue" };
 
-export function Proprietes() {
+export function Proprietes({ proprietes }: { proprietes: Propriete[] }) {
   const [index, setIndex] = useState(0);
   const vedette = proprietes[index];
-  const autres = proprietes.map((propriete, i) => ({ propriete, i })).filter(({ i }) => i !== index);
+  const autres = [1, 2]
+    .filter((pas) => pas < proprietes.length)
+    .map((pas) => {
+      const i = (index + pas) % proprietes.length;
+      return { propriete: proprietes[i], i };
+    });
   const decaler = (pas: number) => setIndex((i) => (i + pas + proprietes.length) % proprietes.length);
 
   return (
@@ -26,23 +31,29 @@ export function Proprietes() {
             </h2>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-lg text-muted">{proprietes.length} propriétés</p>
-            <button
-              type="button"
-              onClick={() => decaler(-1)}
-              aria-label="Propriété précédente"
-              className="flex size-[46px] items-center justify-center rounded-full border border-[#cdd3dd] text-muted hover:border-navy hover:text-navy"
-            >
-              <ArrowLeft className="size-4" aria-hidden />
-            </button>
-            <button
-              type="button"
-              onClick={() => decaler(1)}
-              aria-label="Propriété suivante"
-              className="flex size-[46px] items-center justify-center rounded-full bg-blue text-white hover:bg-navy"
-            >
-              <ArrowRight className="size-4" aria-hidden />
-            </button>
+            <p className="text-lg text-muted">
+              {proprietes.length} propriété{proprietes.length > 1 ? "s" : ""}
+            </p>
+            {proprietes.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => decaler(-1)}
+                  aria-label="Propriété précédente"
+                  className="flex size-[46px] items-center justify-center rounded-full border border-[#cdd3dd] text-muted hover:border-navy hover:text-navy"
+                >
+                  <ArrowLeft className="size-4" aria-hidden />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => decaler(1)}
+                  aria-label="Propriété suivante"
+                  className="flex size-[46px] items-center justify-center rounded-full bg-blue text-white hover:bg-navy"
+                >
+                  <ArrowRight className="size-4" aria-hidden />
+                </button>
+              </>
+            )}
           </div>
         </Reveal>
 
@@ -58,7 +69,7 @@ export function Proprietes() {
             />
           </Reveal>
           <Reveal delai={300} className="flex-1">
-            <div key={vedette.adresse} className="flex animate-entrer-droite flex-col">
+            <div key={vedette.id} className="flex animate-entrer-droite flex-col">
               <Statut propriete={vedette} className="text-base" />
               <p className="mt-[30px] font-serif text-[56px] leading-none text-navy">{vedette.prix}</p>
               <p className="mt-4 text-xl">{vedette.adresse}</p>
@@ -80,7 +91,7 @@ export function Proprietes() {
 
         <div className="flex flex-col gap-10 pt-5 md:flex-row md:gap-0">
           {autres.map(({ propriete, i: position }, i) => (
-            <Reveal key={propriete.adresse} delai={i * 120} className="flex flex-1">
+            <Reveal key={propriete.id} delai={i * 120} className="flex flex-1">
               {i > 0 && <span className="mx-6 hidden w-px self-stretch bg-line-strong md:block" aria-hidden />}
               <button
                 type="button"

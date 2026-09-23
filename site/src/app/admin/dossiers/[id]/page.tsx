@@ -25,7 +25,7 @@ export default async function DossierPage({ params }: { params: Promise<{ id: st
     ["Échéancier", answer.echeancier],
   ];
   return (
-    <AdminShell>
+    <AdminShell actif="demandes">
       <Link href="/admin" className="bo-back">
         <ArrowLeft size={18} />
         Toutes les demandes

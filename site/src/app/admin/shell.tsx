@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, Inbox, LogOut } from "lucide-react";
+import { ArrowUpRight, House, Inbox, LogOut } from "lucide-react";
 import { requireUser } from "@/lib/backoffice/auth";
 import { externalUrl } from "@/lib/backoffice/model";
 import { logout } from "./actions";
 
-export async function AdminShell({ children }: { children: React.ReactNode }) {
+export async function AdminShell({ actif, children }: { actif: "demandes" | "proprietes"; children: React.ReactNode }) {
   const user = await requireUser();
   const agenda = externalUrl(process.env.CALNODE_ADMIN_URL);
   return (
@@ -19,9 +19,13 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
           <small>Espace courtiers</small>
         </Link>
         <nav aria-label="Navigation du back-office">
-          <Link href="/admin" aria-current="page">
+          <Link href="/admin" aria-current={actif === "demandes" ? "page" : undefined}>
             <Inbox size={20} />
             Demandes
+          </Link>
+          <Link href="/admin/proprietes" aria-current={actif === "proprietes" ? "page" : undefined}>
+            <House size={20} />
+            Propriétés
           </Link>
           {agenda && (
             <a href={agenda} target="_blank" rel="noreferrer">

@@ -20,7 +20,7 @@ export default async function LeadsPage({
   const stats = await summary();
   const href = (page: number) => "/admin?" + new URLSearchParams({ q, status, owner, page: String(page) });
   return (
-    <AdminShell>
+    <AdminShell actif="demandes">
       <header className="bo-heading">
         <div>
           <p className="bo-eyebrow">VOTRE ESPACE DE TRAVAIL</p>
