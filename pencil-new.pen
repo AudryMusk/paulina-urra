@@ -250,7 +250,7 @@
           "fill": {
             "type": "image",
             "enabled": true,
-            "url": "images/image.png",
+            "url": "images/hero-equipe-photo-reelle.jpg",
             "mode": "fill"
           },
           "layout": "none",
@@ -316,7 +316,7 @@
                   "fill": "$ink",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Vendez ou achetez avec Paulina et Denis à Boucherville, sur la Rive-Sud et dans le Grand Montréal.\n\nService en français et en anglais.",
+                  "content": "Vendez ou achetez avec Paulina et Denis à Boucherville, sur la Rive-Sud et dans le Grand Montréal.\n\nService en français, en anglais et en espagnol.",
                   "lineHeight": 1.5,
                   "fontFamily": "$sans",
                   "fontSize": 20,
@@ -589,7 +589,7 @@
                   "fill": "#FFFFFFD9",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "En français\net en anglais",
+                  "content": "En français, anglais\net espagnol",
                   "lineHeight": 1.55,
                   "fontFamily": "$sans",
                   "fontSize": 18,
@@ -1367,7 +1367,7 @@
                               "id": "i9tXwM",
                               "name": "Valeur",
                               "fill": "$ink",
-                              "content": "Français · English",
+                              "content": "Français · English · Español",
                               "fontFamily": "$sans",
                               "fontSize": 18,
                               "fontWeight": "normal"
@@ -1535,7 +1535,7 @@
                               "id": "DO7zo",
                               "name": "Valeur",
                               "fill": "$ink",
-                              "content": "Français · English",
+                              "content": "Français · English · Español",
                               "fontFamily": "$sans",
                               "fontSize": 18,
                               "fontWeight": "normal"
@@ -3753,7 +3753,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "images/image.png",
+                    "url": "images/hero-equipe-photo-reelle.jpg",
                     "mode": "fill"
                   },
                   "width": 1574,
@@ -7203,6 +7203,32 @@
                           "fontWeight": "normal"
                         }
                       ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "D02a5s",
+                      "name": "Español",
+                      "height": 44,
+                      "stroke": "$line",
+                      "strokeWidth": 1,
+                      "gap": 8,
+                      "padding": [
+                        9,
+                        16
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UC6on",
+                          "name": "Label",
+                          "fill": "$ink",
+                          "content": "Español",
+                          "fontFamily": "$sans",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -7840,7 +7866,7 @@
                           "fill": "$ink",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Français · English",
+                          "content": "Français · English · Español",
                           "lineHeight": 1.5,
                           "fontFamily": "$sans",
                           "fontSize": 18,

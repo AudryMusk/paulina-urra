@@ -1,29 +1,29 @@
-export type Option = { valeur: string; note?: string; commercial?: boolean };
+export type Option = { id: string; valeur: string; commercial?: boolean };
 
 export const typesPropriete: Option[] = [
-  { valeur: "Maison unifamiliale" },
-  { valeur: "Condo ou appartement" },
-  { valeur: "Plex (2 à 5 logements)" },
-  { valeur: "Immeuble à revenus (6 logements et plus)", commercial: true },
-  { valeur: "Local commercial ou industriel", commercial: true },
-  { valeur: "Terrain, chalet ou autre" },
+  { id: "unifamiliale", valeur: "Maison unifamiliale" },
+  { id: "condo", valeur: "Condo ou appartement" },
+  { id: "plex", valeur: "Plex (2 à 5 logements)" },
+  { id: "immeuble", valeur: "Immeuble à revenus (6 logements et plus)", commercial: true },
+  { id: "local", valeur: "Local commercial ou industriel", commercial: true },
+  { id: "autre", valeur: "Terrain, chalet ou autre" },
 ];
 
 export const etats: Option[] = [
-  { valeur: "Clé en main", note: "Rénovée récemment, rien à prévoir" },
-  { valeur: "Bon état", note: "Quelques rafraîchissements à prévoir" },
-  { valeur: "À rénover", note: "Travaux importants : toiture, cuisine, fondation…" },
-  { valeur: "Je ne sais pas trop", note: "On en jase lors de l'appel" },
+  { id: "cleEnMain", valeur: "Clé en main" },
+  { id: "bon", valeur: "Bon état" },
+  { id: "aRenover", valeur: "À rénover" },
+  { id: "incertain", valeur: "Je ne sais pas trop" },
 ];
 
 export const echeanciers: Option[] = [
-  { valeur: "Le plus tôt possible", note: "D'ici 3 mois" },
-  { valeur: "Dans 3 à 6 mois" },
-  { valeur: "Dans 6 à 12 mois" },
-  { valeur: "Je m'informe seulement", note: "Aucun projet précis pour l'instant" },
+  { id: "rapide", valeur: "Le plus tôt possible" },
+  { id: "troisSix", valeur: "Dans 3 à 6 mois" },
+  { id: "sixDouze", valeur: "Dans 6 à 12 mois" },
+  { id: "information", valeur: "Je m'informe seulement" },
 ];
 
-export const langues = ["Français", "English"] as const;
+export const langues = ["Français", "English", "Español"] as const;
 export const courtiersPreferes = ["Peu importe", "Paulina", "Denis"] as const;
 
 export type Reponses = {
@@ -65,30 +65,43 @@ export const NOMBRE_QUESTIONS = 6;
 const parmi = (options: Option[], valeur: string) => options.some((option) => option.valeur === valeur);
 const entier = (n: number) => Number.isInteger(n) && n >= 0 && n <= 20;
 
-export function erreurEtape(etape: number, r: Reponses): string | null {
+export type ErreurCle =
+  | "typePropriete"
+  | "adresse"
+  | "nombres"
+  | "superficie"
+  | "etat"
+  | "echeancier"
+  | "nom"
+  | "courriel"
+  | "telephone"
+  | "preferences"
+  | "consentement";
+
+export function erreurEtape(etape: number, r: Reponses): ErreurCle | null {
   switch (etape) {
     case 1:
-      return parmi(typesPropriete, r.typePropriete) ? null : "Choisissez un type de propriété pour continuer.";
+      return parmi(typesPropriete, r.typePropriete) ? null : "typePropriete";
     case 2:
-      return r.adresse.trim().length >= 5 && r.adresse.length <= 200 ? null : "Indiquez l'adresse de la propriété.";
+      return r.adresse.trim().length >= 5 && r.adresse.length <= 200 ? null : "adresse";
     case 3:
-      if (![r.chambres, r.sallesDeBain, r.stationnement].every(entier)) return "Vérifiez les nombres indiqués.";
-      return /^\d{0,6}$/.test(r.superficie) ? null : "La superficie doit être un nombre en pieds carrés.";
+      if (![r.chambres, r.sallesDeBain, r.stationnement].every(entier)) return "nombres";
+      return /^\d{0,6}$/.test(r.superficie) ? null : "superficie";
     case 4:
-      return parmi(etats, r.etat) ? null : "Choisissez l'état de la propriété pour continuer.";
+      return parmi(etats, r.etat) ? null : "etat";
     case 5:
-      return parmi(echeanciers, r.echeancier) ? null : "Choisissez un échéancier pour continuer.";
+      return parmi(echeanciers, r.echeancier) ? null : "echeancier";
     case 6:
-      if (r.nom.trim().length < 2 || r.nom.length > 120) return "Indiquez votre prénom et votre nom.";
+      if (r.nom.trim().length < 2 || r.nom.length > 120) return "nom";
       if (r.courriel.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(r.courriel.trim())) {
-        return "Indiquez un courriel valide.";
+        return "courriel";
       }
       const chiffres = r.telephone.replace(/\D/g, "").length;
       if (r.telephone.length > 32 || !/^[+\d\s().-]+$/.test(r.telephone) || chiffres < 10 || chiffres > 15) {
-        return "Indiquez un numéro de téléphone à 10 chiffres.";
+        return "telephone";
       }
-      if (!langues.includes(r.langue) || !courtiersPreferes.includes(r.courtier)) return "Vérifiez vos préférences.";
-      return r.consentement ? null : "Cochez la case pour accepter d'être contacté·e.";
+      if (!langues.includes(r.langue) || !courtiersPreferes.includes(r.courtier)) return "preferences";
+      return r.consentement ? null : "consentement";
     default:
       return null;
   }

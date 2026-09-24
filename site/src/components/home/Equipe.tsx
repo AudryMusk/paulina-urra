@@ -1,26 +1,19 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Check, Languages, Mail, Phone } from "lucide-react";
 import { courtiers, telLink } from "@/lib/content";
 import { Reveal } from "../Reveal";
 import { Courriel, SectionHeader, wrap } from "../ui";
 
-const garanties = [
-  "Programme de protection Tranquilli-T inclus",
-  "RE/MAX Intégrité : solution vices cachés",
-  "Photographie et mise en valeur professionnelles",
-  "Réseau de notaires, courtiers hypothécaires et inspecteurs",
-];
+const garanties = ["tranquillite", "integrite", "photos", "reseau"] as const;
 
 export function Equipe() {
+  const t = useTranslations("equipe");
   return (
     <section id="equipe" className="scroll-mt-24 bg-mist">
       <div className={`${wrap} flex flex-col gap-10 py-20`}>
         <Reveal depuis="haut">
-          <SectionHeader
-            label="L'ÉQUIPE"
-            title={"Une équipe à l’écoute\nde votre projet."}
-            intro="Vendre ou acheter marque une nouvelle étape. Paulina et Denis mettent leurs compétences en commun pour vous guider, répondre à vos questions et suivre votre dossier avec attention."
-          />
+          <SectionHeader label={t("label")} title={t("titre")} intro={t("intro")} />
         </Reveal>
         <div className="grid gap-6 lg:grid-cols-2">
           {courtiers.map((courtier, i) => (
@@ -39,8 +32,8 @@ export function Equipe() {
                 </div>
                 <div className="flex flex-1 flex-col gap-4 p-6">
                   <h3 className="font-serif text-[30px] leading-tight">{courtier.nom}</h3>
-                  <p className="whitespace-pre-line text-base text-muted">{courtier.role}</p>
-                  <p className="font-serif text-xl italic leading-normal">{courtier.citation}</p>
+                  <p className="whitespace-pre-line text-base text-muted">{t(`${courtier.cle}.role`)}</p>
+                  <p className="font-serif text-xl italic leading-normal">{t(`${courtier.cle}.citation`)}</p>
                   <div className="flex-1" />
                   <a href={telLink(courtier.telephone)} className="flex items-center gap-2.5 text-lg hover:text-red">
                     <Phone className="size-[15px] text-blue" aria-hidden />
@@ -57,7 +50,7 @@ export function Equipe() {
                   </a>
                   <p className="flex items-center gap-2.5 text-lg">
                     <Languages className="size-[15px] text-blue" aria-hidden />
-                    Français · English
+                    {t("langues")}
                   </p>
                 </div>
               </article>
@@ -69,7 +62,7 @@ export function Equipe() {
             <li key={garantie}>
               <Reveal delai={i * 80} className="flex gap-2.5 text-lg leading-normal text-muted">
                 <Check className="mt-1 size-4 shrink-0 text-red" aria-hidden />
-                {garantie}
+                {t(`garanties.${garantie}`)}
               </Reveal>
             </li>
           ))}

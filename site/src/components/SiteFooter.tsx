@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { bureau, courtiers, reseaux, telLink } from "@/lib/content";
 import { Courriel, wrap } from "./ui";
@@ -10,16 +11,14 @@ const liensSociaux = [
 ];
 
 export function SiteFooter() {
+  const t = useTranslations("pied");
   return (
     <footer className="bg-night text-white/85">
       <div className={`${wrap} flex flex-col gap-14 pt-16 pb-8`}>
         <div className="grid gap-10 sm:grid-cols-2 lg:flex lg:gap-8">
           <div className="flex flex-col gap-5 lg:w-60 lg:shrink-0">
             <Image src="/images/logo-ur.jpg" alt="Équipe Urra-Rauda" width={132} height={138} />
-            <p className="text-base leading-relaxed">
-              Courtiers immobiliers résidentiel et commercial. Membres de l&apos;OACIQ. Franchisé indépendant et
-              autonome de RE/MAX Québec inc.
-            </p>
+            <p className="text-base leading-relaxed">{t("description")}</p>
           </div>
           {courtiers.map((courtier) => (
             <div key={courtier.nom} className="flex flex-col gap-3 lg:flex-1">
@@ -27,7 +26,7 @@ export function SiteFooter() {
                 {"nomCourt" in courtier ? courtier.nomCourt : courtier.nom}
               </p>
               <a href={telLink(courtier.telephone)} className="text-lg hover:text-white">
-                Cellulaire · {courtier.telephone}
+                {t("cellulaire")} · {courtier.telephone}
               </a>
               <a href={`mailto:${courtier.courriel}`} className="text-lg hover:text-white">
                 <Courriel adresse={courtier.courriel} />
@@ -35,12 +34,12 @@ export function SiteFooter() {
             </div>
           ))}
           <address className="flex flex-col gap-3 not-italic lg:flex-1">
-            <p className="text-base font-semibold tracking-[0.12em]">BUREAU</p>
+            <p className="text-base font-semibold tracking-[0.12em]">{t("bureauTitre")}</p>
             <p className="text-lg">{bureau.nom}</p>
             <p className="text-lg">{bureau.adresse}</p>
             <p className="text-lg">{bureau.ville}</p>
             <a href={telLink(bureau.telephone)} className="text-lg hover:text-white">
-              Bureau · {bureau.telephone}
+              {t("bureau")} · {bureau.telephone}
             </a>
           </address>
         </div>

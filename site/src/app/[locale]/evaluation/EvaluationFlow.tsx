@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useLocale, useMessages, useTranslations } from "next-intl";
 import {
   type CSSProperties,
   useEffect,
@@ -30,6 +30,7 @@ import {
   Timer,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { useRouter } from "@/i18n/navigation";
 import { courtiers } from "@/lib/content";
 import {
   courtiersPreferes,
@@ -40,6 +41,7 @@ import {
   NOMBRE_QUESTIONS,
   reponsesInitiales,
   typesPropriete,
+  type ErreurCle,
   type Option,
   type Reponses,
 } from "@/lib/evaluation";
@@ -58,8 +60,10 @@ type Depart = { etape: number; reponses: Reponses };
 
 const abonnementVide = () => () => {};
 
-function lireDepart(adresse: string, depuisSauvegarde: boolean): Depart {
-  const depart: Depart = { etape: adresse ? 1 : 0, reponses: { ...reponsesInitiales, adresse } };
+const languesDuSite = { fr: "Français", en: "English", es: "Español" } as const;
+
+function lireDepart(adresse: string, langue: Reponses["langue"], depuisSauvegarde: boolean): Depart {
+  const depart: Depart = { etape: adresse ? 1 : 0, reponses: { ...reponsesInitiales, adresse, langue } };
   if (!depuisSauvegarde) return depart;
   try {
     const sauvegarde = JSON.parse(localStorage.getItem(CLE_SAUVEGARDE) ?? "null");
@@ -74,6 +78,7 @@ function lireDepart(adresse: string, depuisSauvegarde: boolean): Depart {
 }
 
 export function EvaluationFlow({ adresseInitiale }: { adresseInitiale: string }) {
+  const locale = useLocale();
   const hydrate = useSyncExternalStore(
     abonnementVide,
     () => true,
@@ -82,7 +87,7 @@ export function EvaluationFlow({ adresseInitiale }: { adresseInitiale: string })
   return (
     <Parcours
       key={hydrate ? "client" : "serveur"}
-      depart={lireDepart(adresseInitiale, hydrate)}
+      depart={lireDepart(adresseInitiale, languesDuSite[locale], hydrate)}
       sauvegarder={hydrate}
     />
   );
@@ -90,9 +95,10 @@ export function EvaluationFlow({ adresseInitiale }: { adresseInitiale: string })
 
 function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolean }) {
   const router = useRouter();
+  const t = useTranslations("evaluation");
   const [etape, setEtape] = useState(depart.etape);
   const [reponses, setReponses] = useState<Reponses>(depart.reponses);
-  const [erreur, setErreur] = useState<string | null>(null);
+  const [erreur, setErreur] = useState<ErreurCle | "limite" | "enregistrement" | "envoi" | null>(null);
   const [termine, setTermine] = useState(false);
   const [sens, setSens] = useState<1 | -1>(1);
   const [envoiEnCours, demarrerEnvoi] = useTransition();
@@ -131,7 +137,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
     demarrerEnvoi(async () => {
       cleEnvoi.current ??= crypto.randomUUID();
       const resultat = await soumettreEvaluation(reponses, cleEnvoi.current);
-      if (!resultat.ok) return setErreur(resultat.message);
+      if (!resultat.ok) return setErreur(resultat.erreur);
       localStorage.removeItem(CLE_SAUVEGARDE);
       if (resultat.rdvUrl) window.location.assign(resultat.rdvUrl);
       else setTermine(true);
@@ -174,7 +180,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
         className="absolute inset-x-0 top-0 h-1 origin-left bg-red transition-transform duration-300"
         style={{ transform: `scaleX(${etape / NOMBRE_QUESTIONS})` }}
         role="progressbar"
-        aria-label="Progression"
+        aria-label={t("progression")}
         aria-valuemin={0}
         aria-valuemax={NOMBRE_QUESTIONS}
         aria-valuenow={etape}
@@ -183,15 +189,13 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
       <header className="flex items-center justify-between gap-4 px-6 py-7 md:px-12">
         <Logo />
         <div className="flex items-center gap-5">
-          <p className="text-base text-muted">
-            {etape} sur {NOMBRE_QUESTIONS}
-          </p>
+          <p className="text-base text-muted">{t("etapeSur", { etape, total: NOMBRE_QUESTIONS })}</p>
           <button
             type="button"
             onClick={() => router.push("/")}
             className="hidden border border-line px-[18px] py-[11px] text-base hover:border-ink sm:block"
           >
-            Reprendre plus tard
+            {t("reprendre")}
           </button>
         </div>
       </header>
@@ -200,11 +204,9 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
         {termine ? (
           <div className="flex animate-descendre flex-col gap-7">
             <h1 ref={titreRef} tabIndex={-1} className="font-serif text-4xl leading-[1.12] outline-none lg:text-5xl">
-              Merci, {reponses.nom.trim().split(/\s+/)[0]}.
+              {t("merciTitre", { prenom: reponses.nom.trim().split(/\s+/)[0] })}
             </h1>
-            <p className="max-w-[760px] text-xl leading-relaxed text-muted">
-              Votre demande est bien reçue. Paulina ou Denis vous contactera pour fixer votre appel de 30 minutes.
-            </p>
+            <p className="max-w-[760px] text-xl leading-relaxed text-muted">{t("merciTexte")}</p>
           </div>
         ) : (
           <form
@@ -218,48 +220,36 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
               <ArrowRight className="size-3.5" aria-hidden />
             </p>
 
-            {etape === 1 && <Titre refTitre={titreRef}>Quel type de propriété souhaitez-vous faire évaluer ?</Titre>}
+            {etape === 1 && <Titre refTitre={titreRef}>{t("q1.titre")}</Titre>}
             {etape === 2 && (
-              <Titre
-                refTitre={titreRef}
-                aide="Elle nous permet de rechercher les ventes comparables dans votre secteur."
-              >
-                Quelle est l&apos;adresse de la propriété ?
+              <Titre refTitre={titreRef} aide={t("q2.aide")}>
+                {t("q2.titre")}
               </Titre>
             )}
             {etape === 3 && (
-              <Titre
-                refTitre={titreRef}
-                aide="Une estimation approximative suffit. Nous vérifierons les détails ensemble."
-              >
-                Parlez-nous un peu de la propriété.
+              <Titre refTitre={titreRef} aide={t("q3.aide")}>
+                {t("q3.titre")}
               </Titre>
             )}
             {etape === 4 && (
-              <Titre refTitre={titreRef} aide="Choisissez la description qui correspond le mieux à votre propriété.">
-                Dans quel état est la propriété ?
+              <Titre refTitre={titreRef} aide={t("q4.aide")}>
+                {t("q4.titre")}
               </Titre>
             )}
             {etape === 5 && (
-              <Titre
-                refTitre={titreRef}
-                aide="Aucune pression : cela nous aide simplement à préparer la bonne stratégie."
-              >
-                Quand aimeriez-vous vendre ?
+              <Titre refTitre={titreRef} aide={t("q5.aide")}>
+                {t("q5.titre")}
               </Titre>
             )}
             {etape === 6 && (
-              <Titre
-                refTitre={titreRef}
-                aide="Ces coordonnées serviront à préparer votre évaluation et à confirmer votre appel."
-                grandeAide
-              >
-                Comment pouvons-nous vous joindre ?
+              <Titre refTitre={titreRef} aide={t("q6.aide")} grandeAide>
+                {t("q6.titre")}
               </Titre>
             )}
 
             {question && (
               <Choix
+                groupe={question.champ}
                 options={question.options}
                 valeur={reponses[question.champ]}
                 onChange={(valeur) => modifier(question.champ, valeur)}
@@ -271,9 +261,9 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                 <MapPin className="size-5 shrink-0 text-red" aria-hidden />
                 <input
                   autoFocus
-                  aria-label="Adresse de la propriété"
+                  aria-label={t("adresse")}
                   autoComplete="street-address"
-                  placeholder="Numéro civique, rue, ville"
+                  placeholder={t("adressePlaceholder")}
                   value={reponses.adresse}
                   onChange={(ev) => modifier("adresse", ev.target.value)}
                   className="w-full bg-transparent text-[26px] outline-none placeholder:text-muted/60"
@@ -283,19 +273,23 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
 
             {etape === 3 && (
               <div className="flex w-full max-w-[760px] flex-col gap-3">
-                <Compteur libelle="Chambres" valeur={reponses.chambres} onChange={(v) => modifier("chambres", v)} />
                 <Compteur
-                  libelle="Salles de bain"
+                  libelle={t("chambres")}
+                  valeur={reponses.chambres}
+                  onChange={(v) => modifier("chambres", v)}
+                />
+                <Compteur
+                  libelle={t("sallesDeBain")}
                   valeur={reponses.sallesDeBain}
                   onChange={(v) => modifier("sallesDeBain", v)}
                 />
                 <Compteur
-                  libelle="Stationnement"
+                  libelle={t("stationnement")}
                   valeur={reponses.stationnement}
                   onChange={(v) => modifier("stationnement", v)}
                 />
                 <label className="flex items-center gap-2 border border-line p-5 focus-within:border-red focus-within:bg-red-soft focus-within:ring-1 focus-within:ring-red">
-                  <span className="flex-1 text-lg">Superficie habitable</span>
+                  <span className="flex-1 text-lg">{t("superficie")}</span>
                   <input
                     inputMode="numeric"
                     placeholder="0"
@@ -303,7 +297,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                     onChange={(ev) => modifier("superficie", ev.target.value.replace(/\D/g, "").slice(0, 6))}
                     className="w-28 bg-transparent text-right text-2xl font-semibold outline-none placeholder:text-muted/50"
                   />
-                  <span className="text-base text-muted">pi²</span>
+                  <span className="text-base text-muted">{t("pieds")}</span>
                 </label>
               </div>
             )}
@@ -311,35 +305,36 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
             {etape === 6 && (
               <div className="flex w-full max-w-[880px] flex-col gap-5">
                 <Champ
-                  libelle="Prénom et nom"
+                  libelle={t("nom")}
                   autoFocus
                   autoComplete="name"
                   value={reponses.nom}
                   onChange={(v) => modifier("nom", v)}
                 />
                 <Champ
-                  libelle="Courriel"
+                  libelle={t("courriel")}
                   type="email"
                   autoComplete="email"
                   value={reponses.courriel}
                   onChange={(v) => modifier("courriel", v)}
                 />
                 <Champ
-                  libelle="Téléphone"
+                  libelle={t("telephone")}
                   type="tel"
                   autoComplete="tel"
                   value={reponses.telephone}
                   onChange={(v) => modifier("telephone", v)}
                 />
                 <Pastilles
-                  libelle="Langue préférée"
+                  libelle={t("langue")}
                   options={langues}
                   valeur={reponses.langue}
                   onChange={(v) => modifier("langue", v)}
                 />
                 <Pastilles
-                  libelle="Courtier préféré"
+                  libelle={t("courtier")}
                   options={courtiersPreferes}
+                  etiquette={(option) => (option === "Peu importe" ? t("peuImporte") : option)}
                   valeur={reponses.courtier}
                   onChange={(v) => modifier("courtier", v)}
                 />
@@ -356,14 +351,14 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                   >
                     {reponses.consentement && <Check className="size-[13px]" />}
                   </span>
-                  J&apos;accepte d&apos;être contacté·e au sujet de mon évaluation.
+                  {t("consentement")}
                 </label>
               </div>
             )}
 
             {erreur && (
               <p role="alert" className="animate-fondu text-base font-medium text-red">
-                {erreur}
+                {t(`erreurs.${erreur}`)}
               </p>
             )}
 
@@ -373,7 +368,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                 disabled={envoiEnCours}
                 className="group flex items-center gap-2.5 bg-red px-[26px] py-4 text-lg font-semibold text-white transition-colors hover:bg-navy disabled:opacity-60"
               >
-                {etape === 6 ? (envoiEnCours ? "Envoi…" : "Choisir mon appel de 30 min") : "Continuer"}
+                {etape === 6 ? (envoiEnCours ? t("envoi") : t("choisirAppel")) : t("continuer")}
                 {etape === 6 ? (
                   <ArrowRight className="size-[15px] transition-transform group-hover:translate-x-1" aria-hidden />
                 ) : (
@@ -383,7 +378,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                   />
                 )}
               </button>
-              <span className="hidden text-base text-muted md:inline">appuyez sur Entrée ↵</span>
+              <span className="hidden text-base text-muted md:inline">{t("entree")}</span>
             </div>
           </form>
         )}
@@ -392,14 +387,14 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
       <footer className="flex items-center justify-between gap-4 px-6 py-6 md:px-12">
         <p className="flex items-center gap-2 text-base text-muted">
           <ShieldCheck className="size-3.5 shrink-0" aria-hidden />
-          Vos réponses sont confidentielles et ne servent qu&apos;à préparer votre évaluation.
+          {t("confidentialite")}
         </p>
         {!termine && (
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => aller(etape - 1)}
-              aria-label="Question précédente"
+              aria-label={t("precedente")}
               className="flex size-11 items-center justify-center bg-mist hover:bg-line"
             >
               <ChevronUp className="size-4" aria-hidden />
@@ -407,7 +402,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
             <button
               type="button"
               onClick={suivant}
-              aria-label="Question suivante"
+              aria-label={t("suivante")}
               className="flex size-11 items-center justify-center bg-mist hover:bg-line"
             >
               <ChevronDown className="size-4" aria-hidden />
@@ -426,6 +421,8 @@ function Introduction({
   titreRef: RefObject<HTMLHeadingElement | null>;
   onCommencer: () => void;
 }) {
+  const t = useTranslations("evaluation.intro");
+  const te = useTranslations("evaluation");
   const [paulina, denis] = courtiers;
   return (
     <div className="flex min-h-dvh flex-col bg-paper lg:flex-row">
@@ -436,28 +433,25 @@ function Introduction({
           tabIndex={-1}
           className="max-w-[720px] font-serif text-4xl leading-[1.1] outline-none lg:text-[52px]"
         >
-          Estimons ensemble la valeur de votre propriété.
+          {t("titre")}
         </h1>
-        <p className="max-w-[640px] text-xl leading-relaxed text-muted">
-          Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina ou
-          Denis. Nous vous présenterons une estimation appuyée sur les ventes comparables de votre secteur.
-        </p>
+        <p className="max-w-[640px] text-xl leading-relaxed text-muted">{t("texte")}</p>
         <div className="flex items-center gap-[18px] pt-2">
           <button
             type="button"
             onClick={onCommencer}
             className="group flex items-center gap-3 bg-red px-7 py-[18px] text-lg font-semibold text-white transition-colors hover:bg-navy"
           >
-            Commencer
+            {t("commencer")}
             <CornerDownLeft className="size-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
           </button>
-          <span className="hidden text-base text-muted md:inline">appuyez sur Entrée ↵</span>
+          <span className="hidden text-base text-muted md:inline">{te("entree")}</span>
         </div>
         <ul className="flex flex-col gap-3.5 text-lg">
           {[
-            { Icone: Timer, texte: "6 questions" },
-            { Icone: Gift, texte: "Sans engagement" },
-            { Icone: CalendarCheck, texte: "Appel de 30 min" },
+            { Icone: Timer, texte: t("questions") },
+            { Icone: Gift, texte: t("engagement") },
+            { Icone: CalendarCheck, texte: t("appel") },
           ].map(({ Icone, texte }) => (
             <li key={texte} className="flex items-center gap-2">
               <Icone className="size-4 text-blue" aria-hidden />
@@ -469,16 +463,16 @@ function Introduction({
       <aside className="flex flex-col justify-center gap-8 bg-mist px-6 py-12 md:px-10 lg:w-[640px] lg:shrink-0">
         <div className="relative aspect-square w-full max-w-[560px] overflow-hidden">
           <Image
-            src="/images/equipe-urra-rauda-hd.jpg"
-            alt="Paulina Urra et Denis Rauda Hernandez"
+            src="/images/equipe-urra-rauda-duo.jpg"
+            alt={t("alt")}
             fill
             preload
             sizes="(min-width: 1024px) 560px, 100vw"
-            className="animate-rideau object-cover object-[78%_center]"
+            className="animate-rideau object-cover object-[80%_center]"
           />
         </div>
         <div className="flex animate-entrer-droite flex-col gap-4 [--delai:500ms]">
-          <p className="font-serif text-[28px] italic text-navy">Paulina et Denis, à votre écoute.</p>
+          <p className="font-serif text-[28px] italic text-navy">{t("ecoute")}</p>
           <p className="text-xl leading-relaxed">
             Paulina · {paulina.telephone}
             <br />
@@ -512,14 +506,18 @@ function Titre({
 }
 
 function Choix({
+  groupe,
   options,
   valeur,
   onChange,
 }: {
+  groupe: "typePropriete" | "etat" | "echeancier";
   options: Option[];
   valeur: string;
   onChange: (valeur: string) => void;
 }) {
+  const t = useTranslations("evaluation");
+  const textes: Record<string, { label: string; note?: string }> = useMessages().evaluation[groupe];
   return (
     <div role="radiogroup" className="flex w-full max-w-[760px] flex-col gap-3">
       {options.map((option, i) => {
@@ -542,11 +540,11 @@ function Choix({
               {lettre}
             </span>
             <span className="flex flex-1 flex-col gap-[3px]">
-              <span className="text-lg">{option.valeur}</span>
-              {option.note && <span className="text-base text-muted">{option.note}</span>}
+              <span className="text-lg">{textes[option.id].label}</span>
+              {textes[option.id].note && <span className="text-base text-muted">{textes[option.id].note}</span>}
             </span>
             {option.commercial && (
-              <span className="bg-blue px-2 py-[3px] text-base font-bold text-white">COMMERCIAL</span>
+              <span className="bg-blue px-2 py-[3px] text-base font-bold text-white">{t("commercial")}</span>
             )}
             {choisi && <Check className="size-[18px] shrink-0 animate-pop text-red" aria-hidden />}
           </button>
@@ -565,6 +563,7 @@ function Compteur({
   valeur: number;
   onChange: (valeur: number) => void;
 }) {
+  const t = useTranslations("evaluation");
   return (
     <div className="flex items-center border border-line px-5 py-4">
       <span className="flex-1 text-lg" id={`compteur-${libelle}`}>
@@ -574,7 +573,7 @@ function Compteur({
         <button
           type="button"
           onClick={() => onChange(Math.max(0, valeur - 1))}
-          aria-label={`${libelle} : un de moins`}
+          aria-label={t("unDeMoins", { libelle })}
           className="flex size-11 items-center justify-center bg-mist hover:bg-line"
         >
           <Minus className="size-[15px]" aria-hidden />
@@ -589,7 +588,7 @@ function Compteur({
         <button
           type="button"
           onClick={() => onChange(Math.min(20, valeur + 1))}
-          aria-label={`${libelle} : un de plus`}
+          aria-label={t("unDePlus", { libelle })}
           className="flex size-11 items-center justify-center bg-red text-white hover:bg-red/90"
         >
           <Plus className="size-[15px]" aria-hidden />
@@ -624,11 +623,13 @@ function Pastilles<T extends string>({
   options,
   valeur,
   onChange,
+  etiquette = (option) => option,
 }: {
   libelle: string;
   options: readonly T[];
   valeur: T;
   onChange: (valeur: T) => void;
+  etiquette?: (option: T) => string;
 }) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -655,7 +656,7 @@ function Pastilles<T extends string>({
                   className="size-[22px] rounded-full object-cover"
                 />
               )}
-              {option}
+              {etiquette(option)}
             </button>
           );
         })}

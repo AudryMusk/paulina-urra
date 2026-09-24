@@ -1,13 +1,14 @@
 "use server";
 
-import { erreurEtape, NOMBRE_QUESTIONS, type Reponses } from "@/lib/evaluation";
+import { erreurEtape, NOMBRE_QUESTIONS, type ErreurCle, type Reponses } from "@/lib/evaluation";
 import { consumeLimit } from "@/lib/backoffice/db";
 import { hashToken } from "@/lib/backoffice/identity";
 import { externalUrl } from "@/lib/backoffice/model";
 import { addNote, createLead } from "@/lib/backoffice/store";
 import { destinataires, notifierNouvelleDemande } from "@/lib/notification";
 
-type Resultat = { ok: true; rdvUrl: string | null } | { ok: false; message: string };
+type Resultat =
+  { ok: true; rdvUrl: string | null } | { ok: false; erreur: ErreurCle | "limite" | "enregistrement" | "envoi" };
 
 const texte = (v: unknown) => (typeof v === "string" ? v : "");
 const nombre = (v: unknown) => (typeof v === "number" ? v : -1);
@@ -36,7 +37,7 @@ export async function soumettreEvaluation(entree: Reponses, cleEnvoi: string): P
   const reponses = normaliser(entree);
   for (let etape = 1; etape <= NOMBRE_QUESTIONS; etape++) {
     const erreur = erreurEtape(etape, reponses);
-    if (erreur) return { ok: false, message: erreur };
+    if (erreur) return { ok: false, erreur };
   }
 
   let demande: { id: string; nouveau: boolean };
@@ -44,11 +45,11 @@ export async function soumettreEvaluation(entree: Reponses, cleEnvoi: string): P
     const autorise =
       (await consumeLimit("demande:" + hashToken(reponses.courriel.toLowerCase()), 10, 60 * 60_000)) &&
       (await consumeLimit("demande:global", 500, 60 * 60_000));
-    if (!autorise) return { ok: false, message: "Trop de demandes rapprochées. Réessayez plus tard ou appelez-nous." };
+    if (!autorise) return { ok: false, erreur: "limite" };
     demande = await createLead(reponses, cleEnvoi);
   } catch (erreur) {
     console.error("Enregistrement de la demande impossible", erreur);
-    return { ok: false, message: "Votre demande n’a pas pu être enregistrée. Réessayez ou appelez-nous directement." };
+    return { ok: false, erreur: "enregistrement" };
   }
 
   if (demande.nouveau) {
@@ -75,7 +76,7 @@ export async function soumettreEvaluation(entree: Reponses, cleEnvoi: string): P
       () => false,
     );
     if (!envoye) {
-      return { ok: false, message: "L'envoi a échoué. Réessayez ou appelez-nous directement." };
+      return { ok: false, erreur: "envoi" };
     }
   }
 

@@ -15,7 +15,7 @@ import type { FormState } from "../actions";
 const texte = (data: FormData, cle: string) => String(data.get(cle) || "");
 
 function rafraichir() {
-  revalidatePath("/");
+  revalidatePath("/[locale]", "page");
   revalidatePath("/admin/proprietes");
 }
 

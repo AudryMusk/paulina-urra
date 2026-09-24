@@ -2,14 +2,84 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Propriete } from "@/lib/proprietes-affichage";
+import type { ProprieteDonnees } from "@/lib/proprietes-affichage";
 import { Reveal } from "../Reveal";
 import { Eyebrow, wrap } from "../ui";
 
 const tonalites = { red: "text-red", blue: "text-blue" };
+const formatNombres = { fr: "fr-CA", en: "en-CA", es: "es-MX" } as const;
 
-export function Proprietes({ proprietes }: { proprietes: Propriete[] }) {
+type Propriete = {
+  id: string;
+  statut: string;
+  tonalite: "red" | "blue";
+  prix: string;
+  adresse: string;
+  ville: string;
+  villeLongue: string;
+  photo: string;
+  resume: string;
+  details: { cle: string; valeur: string; accent?: boolean }[];
+};
+
+function useAffichage() {
+  const t = useTranslations("proprietes");
+  const format = formatNombres[useLocale()];
+  const nombre = new Intl.NumberFormat(format);
+  const argent = new Intl.NumberFormat(format, {
+    style: "currency",
+    currency: "CAD",
+    currencyDisplay: "narrowSymbol",
+    maximumFractionDigits: 0,
+  });
+  return (p: ProprieteDonnees): Propriete => {
+    const pieds = p.superficie !== null ? t("pieds", { n: nombre.format(p.superficie) }) : null;
+    const pieces = [
+      p.chambres !== null ? t("chambres", { n: p.chambres }) : null,
+      p.salles_de_bain !== null ? t("sallesDeBain", { n: p.salles_de_bain }) : null,
+    ].filter((x) => x !== null);
+    const details: Propriete["details"] = [];
+    if (p.type_propriete) details.push({ cle: t("type"), valeur: p.type_propriete });
+    if (pieds) details.push({ cle: t("superficie"), valeur: pieds });
+    if (pieces.length) details.push({ cle: t("pieces"), valeur: pieces.join(" · ") });
+    if (p.prix_demande !== null) {
+      details.push({ cle: t("prixDemande"), valeur: argent.format(p.prix_demande) });
+      if (p.etat === "vendu" && p.prix !== p.prix_demande) {
+        const ecart = p.prix - p.prix_demande;
+        details.push({
+          cle: t("ecart"),
+          valeur: `${ecart > 0 ? "+" : "−"} ${argent.format(Math.abs(ecart))}`,
+          accent: true,
+        });
+      }
+    }
+    return {
+      id: p.id,
+      statut: p.mention || t(p.etat),
+      tonalite: p.etat === "vendu" ? "red" : "blue",
+      prix: argent.format(p.prix),
+      adresse: p.adresse,
+      ville: p.ville,
+      villeLongue: t("province", { ville: p.ville }),
+      photo: `/photos/${p.photo_id}`,
+      resume: [
+        p.chambres !== null ? t("chambresCourt", { n: p.chambres }) : null,
+        p.salles_de_bain !== null ? t("sallesDeBainCourt", { n: p.salles_de_bain }) : null,
+        pieds,
+      ]
+        .filter((x) => x !== null)
+        .join(" · "),
+      details,
+    };
+  };
+}
+
+export function Proprietes({ proprietes: donnees }: { proprietes: ProprieteDonnees[] }) {
+  const t = useTranslations("proprietes");
+  const afficher = useAffichage();
+  const proprietes = donnees.map(afficher);
   const [index, setIndex] = useState(0);
   const vedette = proprietes[index];
   const autres = [1, 2]
@@ -25,21 +95,17 @@ export function Proprietes({ proprietes }: { proprietes: Propriete[] }) {
       <div className={`${wrap} flex flex-col gap-12 pt-20 pb-24 lg:gap-[60px]`}>
         <Reveal depuis="haut" className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="flex flex-col gap-6">
-            <Eyebrow>MANDATS RÉCENTS</Eyebrow>
-            <h2 className="whitespace-pre-line font-serif text-4xl leading-[1.1] lg:text-5xl">
-              {"Vendues ou disponibles,\ndécouvrez nos propriétés."}
-            </h2>
+            <Eyebrow>{t("label")}</Eyebrow>
+            <h2 className="whitespace-pre-line font-serif text-4xl leading-[1.1] lg:text-5xl">{t("titre")}</h2>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-lg text-muted">
-              {proprietes.length} propriété{proprietes.length > 1 ? "s" : ""}
-            </p>
+            <p className="text-lg text-muted">{t("compte", { n: proprietes.length })}</p>
             {proprietes.length > 1 && (
               <>
                 <button
                   type="button"
                   onClick={() => decaler(-1)}
-                  aria-label="Propriété précédente"
+                  aria-label={t("precedente")}
                   className="flex size-[46px] items-center justify-center rounded-full border border-[#cdd3dd] text-muted hover:border-navy hover:text-navy"
                 >
                   <ArrowLeft className="size-4" aria-hidden />
@@ -47,7 +113,7 @@ export function Proprietes({ proprietes }: { proprietes: Propriete[] }) {
                 <button
                   type="button"
                   onClick={() => decaler(1)}
-                  aria-label="Propriété suivante"
+                  aria-label={t("suivante")}
                   className="flex size-[46px] items-center justify-center rounded-full bg-blue text-white hover:bg-navy"
                 >
                   <ArrowRight className="size-4" aria-hidden />
@@ -96,7 +162,7 @@ export function Proprietes({ proprietes }: { proprietes: Propriete[] }) {
               <button
                 type="button"
                 onClick={() => setIndex(position)}
-                aria-label={`Voir ${propriete.adresse}, ${propriete.ville}`}
+                aria-label={t("voir", { adresse: propriete.adresse, ville: propriete.ville })}
                 className="group flex flex-1 flex-col gap-6 text-left sm:flex-row sm:gap-[26px]"
               >
                 <div className="relative aspect-[230/171] w-full overflow-hidden sm:w-[230px] sm:shrink-0">

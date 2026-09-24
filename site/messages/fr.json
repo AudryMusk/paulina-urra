@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "titre": "Équipe Urra-Rauda · Courtiers immobiliers RE/MAX Signature",
+    "description": "Paulina Urra et Denis Rauda Hernandez, courtiers immobiliers résidentiel et commercial à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
+    "evaluationTitre": "Évaluation gratuite · Équipe Urra-Rauda",
+    "evaluationDescription": "Six questions sur votre propriété, puis un appel gratuit de 30 minutes avec Paulina ou Denis pour discuter de votre évaluation."
+  },
+  "logo": {
+    "accueil": "Équipe Urra-Rauda, accueil",
+    "equipe": "ÉQUIPE"
+  },
+  "entete": {
+    "navigation": "Navigation principale",
+    "vendre": "Vendre",
+    "acheter": "Acheter",
+    "commercial": "Commercial",
+    "proprietes": "Propriétés",
+    "equipe": "L'équipe",
+    "langue": "Langue",
+    "cta": "Évaluation gratuite"
+  },
+  "hero": {
+    "alt": "Paulina Urra et Denis Rauda Hernandez dans une maison lumineuse",
+    "surtitre": "ÉQUIPE URRA-RAUDA · RE/MAX",
+    "titre": "Avec vous, du début à la clé.",
+    "texte": "Vendez ou achetez avec Paulina et Denis à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
+    "langues": "Service en français, en anglais et en espagnol.",
+    "cta": "Évaluation gratuite",
+    "equipe": "Notre équipe"
+  },
+  "piliers": {
+    "titre": "À vos côtés,\nà chaque étape.",
+    "vendre": { "titre": "Vendre", "texte": "Une mise en marché\nsoignée" },
+    "acheter": { "titre": "Acheter", "texte": "Un accompagnement\npersonnalisé" },
+    "evaluer": { "titre": "Évaluer", "texte": "Une analyse de\nvotre marché" },
+    "echanger": { "titre": "Échanger", "texte": "En français, anglais\net espagnol" }
+  },
+  "services": {
+    "label": "SERVICES",
+    "titre": "Votre projet,\nnotre accompagnement.",
+    "intro": "Vous échangez directement avec Paulina ou Denis, du premier appel à la remise des clés chez le notaire.",
+    "nouveau": "NOUVEAU",
+    "vendre": {
+      "titre": "Vendre",
+      "sousTitre": "Mise en marché complète",
+      "texte": "Un prix réfléchi, des photos professionnelles et un accompagnement à chaque étape de la vente."
+    },
+    "acheter": {
+      "titre": "Acheter",
+      "sousTitre": "Accompagnement acheteur",
+      "texte": "Visites ciblées, inspection encadrée et financement préparé en amont avec nos partenaires hypothécaires."
+    },
+    "commercial": {
+      "titre": "Commercial",
+      "sousTitre": "Immeubles, plex et locaux",
+      "texte": "Immeubles à revenus, locaux commerciaux et terrains. Analyse de rendement et mise en marché ciblée."
+    },
+    "evaluer": {
+      "titre": "Évaluer",
+      "sousTitre": "Valeur marchande",
+      "texte": "Une estimation appuyée sur les ventes comparables de votre secteur, expliquée lors d’un appel de 30 minutes."
+    }
+  },
+  "equipe": {
+    "label": "L'ÉQUIPE",
+    "titre": "Une équipe à l’écoute\nde votre projet.",
+    "intro": "Vendre ou acheter marque une nouvelle étape. Paulina et Denis mettent leurs compétences en commun pour vous guider, répondre à vos questions et suivre votre dossier avec attention.",
+    "paulina": {
+      "role": "Courtière immobilière\nRésidentiel et commercial",
+      "citation": "« Je m'engage à réaliser ce projet efficacement et sans complication. »"
+    },
+    "denis": {
+      "role": "Courtier immobilier\nRésidentiel et commercial",
+      "citation": "« Avec vous, du début à la clé. »"
+    },
+    "langues": "Français · English · Español",
+    "garanties": {
+      "tranquillite": "Programme de protection Tranquilli-T inclus",
+      "integrite": "RE/MAX Intégrité : solution vices cachés",
+      "photos": "Photographie et mise en valeur professionnelles",
+      "reseau": "Réseau de notaires, courtiers hypothécaires et inspecteurs"
+    }
+  },
+  "proprietes": {
+    "label": "MANDATS RÉCENTS",
+    "titre": "Vendues ou disponibles,\ndécouvrez nos propriétés.",
+    "compte": "{n, plural, one {# propriété} other {# propriétés}}",
+    "precedente": "Propriété précédente",
+    "suivante": "Propriété suivante",
+    "voir": "Voir {adresse}, {ville}",
+    "vendu": "Vendue",
+    "a_vendre": "À vendre",
+    "type": "Type",
+    "superficie": "Superficie",
+    "pieces": "Pièces",
+    "prixDemande": "Prix demandé",
+    "ecart": "Écart",
+    "pieds": "{n} pi²",
+    "chambres": "{n, plural, one {# chambre} other {# chambres}}",
+    "sallesDeBain": "{n, plural, one {# salle de bain} other {# salles de bain}}",
+    "chambresCourt": "{n} ch",
+    "sallesDeBainCourt": "{n} sdb",
+    "province": "{ville} (Québec)"
+  },
+  "temoignages": {
+    "label": "TÉMOIGNAGES",
+    "titre": "Ce que nos clients\nretiennent de leur expérience.",
+    "etoiles": "5 étoiles sur 5",
+    "vedette": {
+      "citation": "« Notre maison était en vente depuis huit mois avec un autre courtier. L'équipe l'a repositionnée, refait les photos, et vendue en trois semaines. »",
+      "detail": "Boucherville · vendu en 21 jours"
+    },
+    "karim": "« Premiers acheteurs, on ne comprenait rien. Ils nous ont expliqué chaque document, sans jamais nous presser. On s'est sentis protégés. »",
+    "josee": "« Ils ont négocié 18 000 $ de plus que notre meilleure offre initiale. Le calme incarné. »"
+  },
+  "evaluationCta": {
+    "label": "ÉVALUATION GRATUITE",
+    "titre": "Combien vaut votre\nmaison aujourd'hui ?",
+    "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina ou Denis pour discuter de votre évaluation.",
+    "temps": { "valeur": "2 min", "libelle": "de votre temps" },
+    "echange": { "valeur": "30 min", "libelle": "pour notre échange" },
+    "gratuit": { "valeur": "0 $", "libelle": "et sans engagement" },
+    "adresse": "ADRESSE DE VOTRE PROPRIÉTÉ",
+    "placeholder": "Numéro civique, rue, ville",
+    "bouton": "Commencer mon évaluation",
+    "traite": "Traité personnellement par Paulina ou Denis.",
+    "coordonnees": "Vos coordonnées servent à préparer votre évaluation."
+  },
+  "pied": {
+    "description": "Courtiers immobiliers résidentiel et commercial. Membres de l'OACIQ. Franchisé indépendant et autonome de RE/MAX Québec inc.",
+    "cellulaire": "Cellulaire",
+    "bureau": "Bureau",
+    "bureauTitre": "BUREAU"
+  },
+  "evaluation": {
+    "progression": "Progression",
+    "etapeSur": "{etape} sur {total}",
+    "reprendre": "Reprendre plus tard",
+    "merciTitre": "Merci, {prenom}.",
+    "merciTexte": "Votre demande est bien reçue. Paulina ou Denis vous contactera pour fixer votre appel de 30 minutes.",
+    "q1": { "titre": "Quel type de propriété souhaitez-vous faire évaluer ?" },
+    "q2": {
+      "titre": "Quelle est l'adresse de la propriété ?",
+      "aide": "Elle nous permet de rechercher les ventes comparables dans votre secteur."
+    },
+    "q3": {
+      "titre": "Parlez-nous un peu de la propriété.",
+      "aide": "Une estimation approximative suffit. Nous vérifierons les détails ensemble."
+    },
+    "q4": {
+      "titre": "Dans quel état est la propriété ?",
+      "aide": "Choisissez la description qui correspond le mieux à votre propriété."
+    },
+    "q5": {
+      "titre": "Quand aimeriez-vous vendre ?",
+      "aide": "Aucune pression : cela nous aide simplement à préparer la bonne stratégie."
+    },
+    "q6": {
+      "titre": "Comment pouvons-nous vous joindre ?",
+      "aide": "Ces coordonnées serviront à préparer votre évaluation et à confirmer votre appel."
+    },
+    "adresse": "Adresse de la propriété",
+    "adressePlaceholder": "Numéro civique, rue, ville",
+    "chambres": "Chambres",
+    "sallesDeBain": "Salles de bain",
+    "stationnement": "Stationnement",
+    "superficie": "Superficie habitable",
+    "pieds": "pi²",
+    "unDeMoins": "{libelle} : un de moins",
+    "unDePlus": "{libelle} : un de plus",
+    "nom": "Prénom et nom",
+    "courriel": "Courriel",
+    "telephone": "Téléphone",
+    "langue": "Langue préférée",
+    "courtier": "Courtier préféré",
+    "peuImporte": "Peu importe",
+    "consentement": "J'accepte d'être contacté·e au sujet de mon évaluation.",
+    "commercial": "COMMERCIAL",
+    "continuer": "Continuer",
+    "choisirAppel": "Choisir mon appel de 30 min",
+    "envoi": "Envoi…",
+    "entree": "appuyez sur Entrée ↵",
+    "confidentialite": "Vos réponses sont confidentielles et ne servent qu'à préparer votre évaluation.",
+    "precedente": "Question précédente",
+    "suivante": "Question suivante",
+    "intro": {
+      "titre": "Estimons ensemble la valeur de votre propriété.",
+      "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina ou Denis. Nous vous présenterons une estimation appuyée sur les ventes comparables de votre secteur.",
+      "commencer": "Commencer",
+      "questions": "6 questions",
+      "engagement": "Sans engagement",
+      "appel": "Appel de 30 min",
+      "alt": "Paulina Urra et Denis Rauda Hernandez",
+      "ecoute": "Paulina et Denis, à votre écoute."
+    },
+    "typePropriete": {
+      "unifamiliale": { "label": "Maison unifamiliale" },
+      "condo": { "label": "Condo ou appartement" },
+      "plex": { "label": "Plex (2 à 5 logements)" },
+      "immeuble": { "label": "Immeuble à revenus (6 logements et plus)" },
+      "local": { "label": "Local commercial ou industriel" },
+      "autre": { "label": "Terrain, chalet ou autre" }
+    },
+    "etat": {
+      "cleEnMain": { "label": "Clé en main", "note": "Rénovée récemment, rien à prévoir" },
+      "bon": { "label": "Bon état", "note": "Quelques rafraîchissements à prévoir" },
+      "aRenover": { "label": "À rénover", "note": "Travaux importants : toiture, cuisine, fondation…" },
+      "incertain": { "label": "Je ne sais pas trop", "note": "On en jase lors de l'appel" }
+    },
+    "echeancier": {
+      "rapide": { "label": "Le plus tôt possible", "note": "D'ici 3 mois" },
+      "troisSix": { "label": "Dans 3 à 6 mois" },
+      "sixDouze": { "label": "Dans 6 à 12 mois" },
+      "information": { "label": "Je m'informe seulement", "note": "Aucun projet précis pour l'instant" }
+    },
+    "erreurs": {
+      "typePropriete": "Choisissez un type de propriété pour continuer.",
+      "adresse": "Indiquez l'adresse de la propriété.",
+      "nombres": "Vérifiez les nombres indiqués.",
+      "superficie": "La superficie doit être un nombre en pieds carrés.",
+      "etat": "Choisissez l'état de la propriété pour continuer.",
+      "echeancier": "Choisissez un échéancier pour continuer.",
+      "nom": "Indiquez votre prénom et votre nom.",
+      "courriel": "Indiquez un courriel valide.",
+      "telephone": "Indiquez un numéro de téléphone à 10 chiffres.",
+      "preferences": "Vérifiez vos préférences.",
+      "consentement": "Cochez la case pour accepter d'être contacté·e.",
+      "limite": "Trop de demandes rapprochées. Réessayez plus tard ou appelez-nous.",
+      "enregistrement": "Votre demande n’a pas pu être enregistrée. Réessayez ou appelez-nous directement.",
+      "envoi": "L'envoi a échoué. Réessayez ou appelez-nous directement."
+    }
+  },
+  "introuvable": {
+    "titre": "Page introuvable.",
+    "texte": "Cette page n’existe pas ou a été déplacée.",
+    "retour": "Retour à l’accueil"
+  }
+}
