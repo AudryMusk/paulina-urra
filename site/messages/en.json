@@ -113,6 +113,19 @@
     "karim": "“As first-time buyers, we didn't understand a thing. They walked us through every document without ever rushing us. We felt protected.”",
     "josee": "“They negotiated $18,000 more than our best initial offer. Calm personified.”"
   },
+  "rencontre": {
+    "label": "MEET PAULINA",
+    "titre": "A committed broker,\nclose to home.",
+    "texte": "A residential and commercial real estate broker with RE/MAX Signature, Paulina guides sellers, buyers and investors in Boucherville, on the South Shore and across Greater Montreal. She takes the time to listen, explains every step and follows your file through to the key handover.",
+    "points": {
+      "specialite": "Residential and commercial",
+      "langues": "Français · English · Español",
+      "bureau": "RE/MAX Signature, Boucherville"
+    },
+    "appeler": "Call Paulina",
+    "instagram": "Follow on Instagram",
+    "alt": "Paulina Urra, real estate broker with RE/MAX Signature"
+  },
   "evaluationCta": {
     "label": "FREE EVALUATION",
     "titre": "What is your home\nworth today?",

@@ -3,7 +3,7 @@ export const courtiers = [
     cle: "paulina",
     prenom: "Paulina",
     nom: "Paulina Urra",
-    photo: "/images/paulina-portrait.jpg",
+    photo: "/images/paulina-equipe.jpg",
     avatar: "/images/paulina-avatar.jpg",
     telephone: "438 866-2204",
     courriel: "paulina.urra@remax-quebec.com",

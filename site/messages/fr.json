@@ -113,6 +113,19 @@
     "karim": "« Premiers acheteurs, on ne comprenait rien. Ils nous ont expliqué chaque document, sans jamais nous presser. On s'est sentis protégés. »",
     "josee": "« Ils ont négocié 18 000 $ de plus que notre meilleure offre initiale. Le calme incarné. »"
   },
+  "rencontre": {
+    "label": "RENCONTREZ PAULINA",
+    "titre": "Une courtière engagée,\nprès de chez vous.",
+    "texte": "Courtière immobilière résidentiel et commercial chez RE/MAX Signature, Paulina accompagne vendeurs, acheteurs et investisseurs à Boucherville, sur la Rive-Sud et dans le Grand Montréal. Elle prend le temps de vous écouter, vous explique chaque étape et suit votre dossier jusqu’à la remise des clés.",
+    "points": {
+      "specialite": "Résidentiel et commercial",
+      "langues": "Français · English · Español",
+      "bureau": "RE/MAX Signature, Boucherville"
+    },
+    "appeler": "Appeler Paulina",
+    "instagram": "Suivre sur Instagram",
+    "alt": "Paulina Urra, courtière immobilière chez RE/MAX Signature"
+  },
   "evaluationCta": {
     "label": "ÉVALUATION GRATUITE",
     "titre": "Combien vaut votre\nmaison aujourd'hui ?",

@@ -9,6 +9,7 @@ import { EvaluationCta } from "@/components/home/EvaluationCta";
 import { Hero } from "@/components/home/Hero";
 import { Piliers } from "@/components/home/Piliers";
 import { Proprietes } from "@/components/home/Proprietes";
+import { Rencontre } from "@/components/home/Rencontre";
 import { Services } from "@/components/home/Services";
 import { Temoignages } from "@/components/home/Temoignages";
 import { listerProprietes } from "@/lib/backoffice/proprietes";
@@ -30,6 +31,7 @@ export default async function Accueil({ params }: PageProps<"/[locale]">) {
         <Equipe />
         {proprietes.length > 0 && <Proprietes proprietes={proprietes} />}
         <Temoignages />
+        <Rencontre />
         <EvaluationCta />
       </main>
       <SiteFooter />

@@ -113,6 +113,19 @@
     "karim": "“Éramos compradores primerizos y no entendíamos nada. Nos explicaron cada documento sin apresurarnos nunca. Nos sentimos protegidos.”",
     "josee": "“Negociaron $18,000 más que nuestra mejor oferta inicial. La calma en persona.”"
   },
+  "rencontre": {
+    "label": "CONOZCA A PAULINA",
+    "titre": "Una corredora comprometida,\ncerca de usted.",
+    "texte": "Corredora inmobiliaria residencial y comercial en RE/MAX Signature, Paulina acompaña a vendedores, compradores e inversionistas en Boucherville, la Rive-Sud y el Gran Montreal. Se toma el tiempo de escucharle, le explica cada etapa y sigue su expediente hasta la entrega de llaves.",
+    "points": {
+      "specialite": "Residencial y comercial",
+      "langues": "Français · English · Español",
+      "bureau": "RE/MAX Signature, Boucherville"
+    },
+    "appeler": "Llamar a Paulina",
+    "instagram": "Seguir en Instagram",
+    "alt": "Paulina Urra, corredora inmobiliaria en RE/MAX Signature"
+  },
   "evaluationCta": {
     "label": "EVALUACIÓN GRATUITA",
     "titre": "¿Cuánto vale su\ncasa hoy?",
