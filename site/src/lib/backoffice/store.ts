@@ -52,6 +52,111 @@ export async function createLead(answers: Reponses, submissionKey: string) {
   });
 }
 
+export async function getLeadBySubmissionKey(submissionKey: string): Promise<Lead | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(submissionKey)) return null;
+  const [lead] = await query<Lead>(`SELECT ${LEAD_COLUMNS} FROM leads WHERE submission_key = $1`, [submissionKey]);
+  return lead || null;
+}
+
+const quandQuebec = (iso: string) =>
+  new Intl.DateTimeFormat("fr-CA", { dateStyle: "full", timeStyle: "short", timeZone: "America/Toronto" }).format(
+    new Date(iso),
+  ) + " (heure du Québec)";
+
+const appelQuebec = (iso: string) =>
+  "Appel : " +
+  new Intl.DateTimeFormat("fr-CA", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/Toronto",
+  }).format(new Date(iso));
+
+const courtierNomme = (hote: string | undefined) => owners.find((o) => o && hote?.startsWith(o));
+
+// Rendez-vous pris par le client dans l'agenda Meetlyio. La note porte la référence de la
+// réservation comme identifiant : une même réservation n'est enregistrée qu'une fois, et les
+// webhooks de Meetlyio retrouvent le dossier par cette note.
+export async function recordBooking(id: string, booking: { reference: string; debut: string; hote: string }) {
+  return transaction(async (q) => {
+    const [lead] = await q<Lead>(`SELECT ${LEAD_COLUMNS} FROM leads WHERE id = $1 FOR UPDATE`, [id]);
+    if (!lead) throw new Error("Dossier introuvable.");
+    const now = new Date().toISOString();
+    const [note] = await q<{ id: string }>(
+      `INSERT INTO activities(id, lead_id, author, body, created_at) VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (id) DO NOTHING RETURNING id`,
+      [
+        "meetlyio:" + booking.reference,
+        id,
+        "Site",
+        `Rendez-vous réservé par le client : ${quandQuebec(booking.debut)}` +
+          (booking.hote ? `, avec ${booking.hote}` : "") +
+          `. Référence Meetlyio : ${booking.reference}.`,
+        now,
+      ],
+    );
+    if (!note) return;
+    const owner = courtierNomme(booking.hote) || lead.owner;
+    const status: Status = lead.status === "nouveau" || lead.status === "contacte" ? "rendez_vous" : lead.status;
+    await q(
+      "UPDATE leads SET status = $1, owner = $2, next_action = $3, updated_at = $4, version = version + 1 WHERE id = $5",
+      [status, owner, appelQuebec(booking.debut), now, id],
+    );
+  });
+}
+
+export type BookingEvent = {
+  livraison: string;
+  type: "booking.cancelled" | "booking.rescheduled";
+  reference: string;
+  debut: string;
+  ancienDebut?: string;
+  hote?: string;
+  motif?: string;
+};
+
+// Annulation, déplacement ou réattribution reçus du webhook Meetlyio. L'identifiant de
+// livraison sert d'identifiant à la note : une livraison renvoyée n'est appliquée qu'une fois.
+export async function applyBookingEvent(e: BookingEvent): Promise<"applique" | "deja" | "inconnu"> {
+  return transaction(async (q) => {
+    const [lien] = await q<{ lead_id: string }>("SELECT lead_id FROM activities WHERE id = $1", [
+      "meetlyio:" + e.reference,
+    ]);
+    if (!lien) return "inconnu";
+    const [lead] = await q<Lead>(`SELECT ${LEAD_COLUMNS} FROM leads WHERE id = $1 FOR UPDATE`, [lien.lead_id]);
+    if (!lead) return "inconnu";
+
+    let { status, owner, next_action } = lead;
+    let body: string;
+    if (e.type === "booking.cancelled") {
+      body = `Rendez-vous annulé : ${quandQuebec(e.debut)}.` + (e.motif ? ` Motif : ${e.motif}` : "");
+      if (status === "rendez_vous") status = "nouveau";
+      next_action = "Rappeler le client : son appel a été annulé";
+    } else if (e.ancienDebut) {
+      body = `Rendez-vous déplacé par le client : ${quandQuebec(e.ancienDebut)} → ${quandQuebec(e.debut)}.`;
+      next_action = appelQuebec(e.debut);
+    } else {
+      body = "Rendez-vous réattribué" + (e.hote ? ` à ${e.hote}` : "") + ` : ${quandQuebec(e.debut)}.`;
+      owner = courtierNomme(e.hote) || owner;
+    }
+
+    const now = new Date().toISOString();
+    const [note] = await q<{ id: string }>(
+      `INSERT INTO activities(id, lead_id, author, body, created_at) VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (id) DO NOTHING RETURNING id`,
+      ["meetlyio-livraison:" + e.livraison, lead.id, "Meetlyio", body.slice(0, 4000), now],
+    );
+    if (!note) return "deja";
+    await q(
+      "UPDATE leads SET status = $1, owner = $2, next_action = $3, updated_at = $4, version = version + 1 WHERE id = $5",
+      [status, owner, next_action, now, lead.id],
+    );
+    return "applique";
+  });
+}
+
 export async function getLead(id: string): Promise<Lead | null> {
   const [lead] = await query<Lead>(`SELECT ${LEAD_COLUMNS} FROM leads WHERE id = $1`, [id]);
   return lead || null;

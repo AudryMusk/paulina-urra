@@ -241,6 +241,24 @@
       "limite": "Trop de demandes rapprochées. Réessayez plus tard ou appelez-nous.",
       "enregistrement": "Votre demande n’a pas pu être enregistrée. Réessayez ou appelez-nous directement.",
       "envoi": "L'envoi a échoué. Réessayez ou appelez-nous directement."
+    },
+    "agenda": {
+      "intro": "Votre demande est bien reçue. Choisissez maintenant le moment de votre appel de 30 minutes avec Paulina ou Denis.",
+      "chargement": "Recherche des disponibilités…",
+      "jours": "Jour de l'appel",
+      "heures": "Heure de l'appel",
+      "fuseau": "Heures affichées selon votre fuseau horaire ({fuseau}).",
+      "confirmer": "Confirmer mon appel",
+      "reservation": "Réservation…",
+      "rappel": "Je préfère qu'on me rappelle",
+      "confirme": "Votre appel est réservé. Vous recevrez une confirmation à {courriel}.",
+      "confirmeAvec": "Votre appel avec {hote} est réservé. Vous recevrez une confirmation à {courriel}.",
+      "erreurs": {
+        "pris": "Cette heure vient d'être réservée. Choisissez-en une autre.",
+        "deja": "Votre appel est déjà réservé. Vérifiez vos courriels.",
+        "limite": "Trop de tentatives rapprochées. Réessayez dans quelques minutes ou appelez-nous.",
+        "indisponible": "La réservation n'a pas pu être faite. Réessayez, ou attendez notre appel : votre demande est bien enregistrée."
+      }
     }
   },
   "introuvable": {

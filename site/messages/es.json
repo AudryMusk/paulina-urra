@@ -241,6 +241,24 @@
       "limite": "Demasiadas solicitudes seguidas. Inténtelo más tarde o llámenos.",
       "enregistrement": "No pudimos registrar su solicitud. Inténtelo de nuevo o llámenos directamente.",
       "envoi": "El envío falló. Inténtelo de nuevo o llámenos directamente."
+    },
+    "agenda": {
+      "intro": "Hemos recibido su solicitud. Ahora elija el momento de su llamada de 30 minutos con Paulina o Denis.",
+      "chargement": "Buscando horarios disponibles…",
+      "jours": "Día de la llamada",
+      "heures": "Hora de la llamada",
+      "fuseau": "Horarios mostrados en su zona horaria ({fuseau}).",
+      "confirmer": "Confirmar mi llamada",
+      "reservation": "Reservando…",
+      "rappel": "Prefiero que me llamen",
+      "confirme": "Su llamada está reservada. Recibirá una confirmación en {courriel}.",
+      "confirmeAvec": "Su llamada con {hote} está reservada. Recibirá una confirmación en {courriel}.",
+      "erreurs": {
+        "pris": "Ese horario acaba de reservarse. Elija otro.",
+        "deja": "Su llamada ya está reservada. Revise su correo electrónico.",
+        "limite": "Demasiados intentos seguidos. Inténtelo en unos minutos o llámenos.",
+        "indisponible": "No se pudo completar la reserva. Inténtelo de nuevo o espere nuestra llamada: su solicitud quedó registrada."
+      }
     }
   },
   "introuvable": {

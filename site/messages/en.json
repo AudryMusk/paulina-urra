@@ -241,6 +241,24 @@
       "limite": "Too many requests in a short time. Try again later or give us a call.",
       "enregistrement": "Your request could not be saved. Try again or call us directly.",
       "envoi": "Sending failed. Try again or call us directly."
+    },
+    "agenda": {
+      "intro": "We have received your request. Now choose a time for your 30-minute call with Paulina or Denis.",
+      "chargement": "Looking for available times…",
+      "jours": "Day of the call",
+      "heures": "Time of the call",
+      "fuseau": "Times are shown in your time zone ({fuseau}).",
+      "confirmer": "Confirm my call",
+      "reservation": "Booking…",
+      "rappel": "I'd rather be called back",
+      "confirme": "Your call is booked. You will receive a confirmation at {courriel}.",
+      "confirmeAvec": "Your call with {hote} is booked. You will receive a confirmation at {courriel}.",
+      "erreurs": {
+        "pris": "That time was just booked. Please choose another one.",
+        "deja": "Your call is already booked. Check your email.",
+        "limite": "Too many attempts in a short time. Try again in a few minutes or give us a call.",
+        "indisponible": "The booking could not be completed. Try again, or wait for our call: your request has been saved."
+      }
     }
   },
   "introuvable": {

@@ -45,7 +45,8 @@ import {
   type Option,
   type Reponses,
 } from "@/lib/evaluation";
-import { soumettreEvaluation } from "./actions";
+import type { EchecReservation } from "@/lib/meetlyio";
+import { lireDisponibilites, reserverAppel, soumettreEvaluation } from "./actions";
 
 const CLE_SAUVEGARDE = "evaluation-urra-rauda";
 
@@ -100,6 +101,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
   const [reponses, setReponses] = useState<Reponses>(depart.reponses);
   const [erreur, setErreur] = useState<ErreurCle | "limite" | "enregistrement" | "envoi" | null>(null);
   const [termine, setTermine] = useState(false);
+  const [cleAgenda, setCleAgenda] = useState<string | null>(null);
   const [sens, setSens] = useState<1 | -1>(1);
   const [envoiEnCours, demarrerEnvoi] = useTransition();
   const titreRef = useRef<HTMLHeadingElement>(null);
@@ -139,8 +141,8 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
       const resultat = await soumettreEvaluation(reponses, cleEnvoi.current);
       if (!resultat.ok) return setErreur(resultat.erreur);
       localStorage.removeItem(CLE_SAUVEGARDE);
-      if (resultat.rdvUrl) window.location.assign(resultat.rdvUrl);
-      else setTermine(true);
+      if (resultat.agenda) setCleAgenda(cleEnvoi.current);
+      setTermine(true);
     });
   };
 
@@ -202,11 +204,15 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
 
       <main className="flex flex-1 items-center px-6 py-10 md:px-12 lg:px-[200px]">
         {termine ? (
-          <div className="flex animate-descendre flex-col gap-7">
+          <div className="flex w-full animate-descendre flex-col gap-7">
             <h1 ref={titreRef} tabIndex={-1} className="font-serif text-4xl leading-[1.12] outline-none lg:text-5xl">
               {t("merciTitre", { prenom: reponses.nom.trim().split(/\s+/)[0] })}
             </h1>
-            <p className="max-w-[760px] text-xl leading-relaxed text-muted">{t("merciTexte")}</p>
+            {cleAgenda ? (
+              <ChoixAppel cleEnvoi={cleAgenda} courriel={reponses.courriel} />
+            ) : (
+              <p className="max-w-[760px] text-xl leading-relaxed text-muted">{t("merciTexte")}</p>
+            )}
           </div>
         ) : (
           <form
@@ -410,6 +416,172 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
           </div>
         )}
       </footer>
+    </div>
+  );
+}
+
+const localesIntl = { fr: "fr-CA", en: "en-CA", es: "es" } as const;
+
+function ChoixAppel({ cleEnvoi, courriel }: { cleEnvoi: string; courriel: string }) {
+  const t = useTranslations("evaluation.agenda");
+  const te = useTranslations("evaluation");
+  const locale = localesIntl[useLocale() as keyof typeof localesIntl] ?? "fr-CA";
+  const [fuseau] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone);
+  // undefined : chargement · null : agenda injoignable
+  const [creneaux, setCreneaux] = useState<string[] | null | undefined>(undefined);
+  const [rechargement, setRechargement] = useState(0);
+  const [jour, setJour] = useState<string | null>(null);
+  const [choix, setChoix] = useState<string | null>(null);
+  const [erreur, setErreur] = useState<EchecReservation | null>(null);
+  const [confirme, setConfirme] = useState<{ debut: string; hote: string } | null>(null);
+  const [rappel, setRappel] = useState(false);
+  const [reservationEnCours, demarrerReservation] = useTransition();
+
+  useEffect(() => {
+    let actif = true;
+    lireDisponibilites(cleEnvoi, fuseau).then(
+      (liste) => actif && setCreneaux(liste),
+      () => actif && setCreneaux(null),
+    );
+    return () => {
+      actif = false;
+    };
+  }, [cleEnvoi, fuseau, rechargement]);
+
+  const format = (options: Intl.DateTimeFormatOptions, iso: string, langue: string = locale) =>
+    new Intl.DateTimeFormat(langue, { timeZone: fuseau, ...options }).format(new Date(iso));
+
+  if (confirme) {
+    const quand = format({ dateStyle: "full", timeStyle: "short" }, confirme.debut);
+    return (
+      <div role="status" className="flex max-w-[760px] items-start gap-4 border border-line p-6">
+        <CalendarCheck className="mt-1 size-6 shrink-0 text-red" aria-hidden />
+        <div className="flex flex-col gap-2">
+          <p className="text-2xl font-semibold">{quand.charAt(0).toUpperCase() + quand.slice(1)}</p>
+          <p className="text-xl leading-relaxed text-muted">
+            {confirme.hote ? t("confirmeAvec", { hote: confirme.hote, courriel }) : t("confirme", { courriel })}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (rappel || creneaux === null || creneaux?.length === 0) {
+    return <p className="max-w-[760px] text-xl leading-relaxed text-muted">{te("merciTexte")}</p>;
+  }
+
+  const parJour = new Map<string, string[]>();
+  for (const debut of creneaux ?? []) {
+    const cle = format({ year: "numeric", month: "2-digit", day: "2-digit" }, debut, "en-CA");
+    parJour.set(cle, [...(parJour.get(cle) ?? []), debut]);
+  }
+  const jourActif = jour && parJour.has(jour) ? jour : parJour.keys().next().value;
+  const heures = (jourActif && parJour.get(jourActif)) || [];
+  const nomFuseau =
+    new Intl.DateTimeFormat(locale, { timeZone: fuseau, timeZoneName: "long" })
+      .formatToParts(new Date())
+      .find((partie) => partie.type === "timeZoneName")?.value ?? fuseau;
+
+  const confirmer = () => {
+    if (!choix || reservationEnCours) return;
+    setErreur(null);
+    demarrerReservation(async () => {
+      const resultat = await reserverAppel(cleEnvoi, choix, fuseau);
+      if (resultat.ok) return setConfirme(resultat);
+      setErreur(resultat.erreur);
+      if (resultat.erreur === "pris") {
+        setChoix(null);
+        setCreneaux(undefined);
+        setRechargement((n) => n + 1);
+      }
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-7">
+      <p className="max-w-[760px] text-xl leading-relaxed text-muted">{t("intro")}</p>
+
+      {creneaux === undefined ? (
+        <p role="status" className="text-xl text-muted">
+          {t("chargement")}
+        </p>
+      ) : (
+        <>
+          <div role="radiogroup" aria-label={t("jours")} className="flex gap-2 overflow-x-auto pb-2">
+            {[...parJour].map(([cle, [premier]]) => {
+              const actif = cle === jourActif;
+              return (
+                <button
+                  key={cle}
+                  type="button"
+                  role="radio"
+                  aria-checked={actif}
+                  onClick={() => {
+                    setJour(cle);
+                    setChoix(null);
+                  }}
+                  className={`flex min-w-[84px] shrink-0 flex-col items-center gap-0.5 border px-3 py-2.5 transition-colors duration-300 ${actif ? "border-blue bg-blue text-white" : "border-line hover:border-muted"}`}
+                >
+                  <span className="text-base">{format({ weekday: "short" }, premier)}</span>
+                  <span className="text-lg font-semibold whitespace-nowrap">
+                    {format({ day: "numeric", month: "short" }, premier)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <div
+              role="radiogroup"
+              aria-label={t("heures")}
+              className="grid max-w-[760px] grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6"
+            >
+              {heures.map((debut) => {
+                const choisi = debut === choix;
+                return (
+                  <button
+                    key={debut}
+                    type="button"
+                    role="radio"
+                    aria-checked={choisi}
+                    onClick={() => setChoix(debut)}
+                    className={`h-11 border text-base transition-colors duration-300 ${choisi ? "border-blue bg-blue font-semibold text-white" : "border-line hover:border-muted"}`}
+                  >
+                    {format({ hour: "numeric", minute: "2-digit" }, debut)}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-base text-muted">{t("fuseau", { fuseau: nomFuseau })}</p>
+          </div>
+        </>
+      )}
+
+      {erreur && (
+        <p role="alert" className="animate-fondu text-base font-medium text-red">
+          {t(`erreurs.${erreur}`)}
+        </p>
+      )}
+
+      <div className="flex flex-wrap items-center gap-[18px]">
+        <button
+          type="button"
+          onClick={confirmer}
+          disabled={!choix || reservationEnCours}
+          className="group flex items-center gap-2.5 bg-red px-[26px] py-4 text-lg font-semibold text-white transition-colors hover:bg-navy disabled:opacity-60"
+        >
+          {reservationEnCours ? t("reservation") : t("confirmer")}
+          <ArrowRight className="size-[15px] transition-transform group-hover:translate-x-1" aria-hidden />
+        </button>
+        <button
+          type="button"
+          onClick={() => setRappel(true)}
+          className="text-base text-muted underline underline-offset-4 hover:text-ink"
+        >
+          {t("rappel")}
+        </button>
+      </div>
     </div>
   );
 }

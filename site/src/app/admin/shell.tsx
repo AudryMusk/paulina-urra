@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowUpRight, House, Inbox, LogOut } from "lucide-react";
 import { requireUser } from "@/lib/backoffice/auth";
-import { externalUrl } from "@/lib/backoffice/model";
+import { adminMeetlyio } from "@/lib/meetlyio";
 import { logout } from "./actions";
 
 export async function AdminShell({ actif, children }: { actif: "demandes" | "proprietes"; children: React.ReactNode }) {
   const user = await requireUser();
-  const agenda = externalUrl(process.env.CALNODE_ADMIN_URL);
+  const agenda = adminMeetlyio();
   return (
     <div className="bo-shell">
       <a className="bo-skip" href="#contenu">
@@ -29,7 +29,7 @@ export async function AdminShell({ actif, children }: { actif: "demandes" | "pro
           </Link>
           {agenda && (
             <a href={agenda} target="_blank" rel="noreferrer">
-              Agenda Calnode
+              Agenda Meetlyio
               <ArrowUpRight size={18} />
               <span className="bo-sr"> (nouvel onglet)</span>
             </a>

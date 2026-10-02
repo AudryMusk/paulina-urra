@@ -3,12 +3,12 @@
 import { erreurEtape, NOMBRE_QUESTIONS, type ErreurCle, type Reponses } from "@/lib/evaluation";
 import { consumeLimit } from "@/lib/backoffice/db";
 import { hashToken } from "@/lib/backoffice/identity";
-import { externalUrl } from "@/lib/backoffice/model";
-import { addNote, createLead } from "@/lib/backoffice/store";
+import { addNote, createLead, getLeadBySubmissionKey, recordBooking } from "@/lib/backoffice/store";
+import { fuseauValide, lireCreneaux, reserver, typeRendezVous, type EchecReservation } from "@/lib/meetlyio";
 import { destinataires, notifierNouvelleDemande } from "@/lib/notification";
 
 type Resultat =
-  { ok: true; rdvUrl: string | null } | { ok: false; erreur: ErreurCle | "limite" | "enregistrement" | "envoi" };
+  { ok: true; agenda: boolean } | { ok: false; erreur: ErreurCle | "limite" | "enregistrement" | "envoi" };
 
 const texte = (v: unknown) => (typeof v === "string" ? v : "");
 const nombre = (v: unknown) => (typeof v === "number" ? v : -1);
@@ -80,12 +80,51 @@ export async function soumettreEvaluation(entree: Reponses, cleEnvoi: string): P
     }
   }
 
-  const lienCourtier =
-    reponses.courtier === "Paulina"
-      ? process.env.CALNODE_PAULINA_BOOKING_URL
-      : reponses.courtier === "Denis"
-        ? process.env.CALNODE_DENIS_BOOKING_URL
-        : undefined;
-  const rdvUrl = externalUrl(lienCourtier) || externalUrl(process.env.CALNODE_BOOKING_URL || process.env.RDV_URL);
-  return { ok: true, rdvUrl };
+  return { ok: true, agenda: typeRendezVous() !== null };
+}
+
+// Agenda Meetlyio : le client choisit son appel juste après l'envoi. La clé d'envoi, connue
+// du seul navigateur qui a soumis la demande, sert à retrouver son dossier.
+
+export async function lireDisponibilites(cleEnvoi: string, fuseau: string): Promise<string[] | null> {
+  try {
+    const demande = await getLeadBySubmissionKey(cleEnvoi);
+    const type = typeRendezVous();
+    if (!demande || !type) return null;
+    if (!(await consumeLimit("creneaux:" + demande.id, 60, 60 * 60_000))) return null;
+    return await lireCreneaux(type, fuseauValide(fuseau));
+  } catch (erreur) {
+    console.error("Lecture des disponibilités impossible", erreur);
+    return null;
+  }
+}
+
+export async function reserverAppel(
+  cleEnvoi: string,
+  debut: string,
+  fuseau: string,
+): Promise<{ ok: true; debut: string; hote: string } | { ok: false; erreur: EchecReservation }> {
+  if (typeof debut !== "string" || debut.length > 40 || Number.isNaN(Date.parse(debut))) {
+    return { ok: false, erreur: "indisponible" };
+  }
+  try {
+    const demande = await getLeadBySubmissionKey(cleEnvoi);
+    const type = typeRendezVous();
+    if (!demande || !type) return { ok: false, erreur: "indisponible" };
+    if (!(await consumeLimit("reservation:" + demande.id, 10, 60 * 60_000))) return { ok: false, erreur: "limite" };
+    const resultat = await reserver(type, {
+      cle: "site-urra-rauda:" + demande.id,
+      debut,
+      reponses: demande.answers,
+      fuseau: fuseauValide(fuseau),
+    });
+    if (!resultat.ok) return resultat;
+    await recordBooking(demande.id, resultat.reservation).catch((erreur) =>
+      console.error("Rendez-vous non inscrit au dossier", erreur),
+    );
+    return { ok: true, debut: resultat.reservation.debut, hote: resultat.reservation.hote };
+  } catch (erreur) {
+    console.error("Réservation impossible", erreur);
+    return { ok: false, erreur: "indisponible" };
+  }
 }
