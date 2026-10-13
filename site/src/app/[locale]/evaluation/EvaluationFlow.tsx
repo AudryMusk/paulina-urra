@@ -30,6 +30,7 @@ import {
   Timer,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { SelecteurLangue } from "@/components/SelecteurLangue";
 import { useRouter } from "@/i18n/navigation";
 import { courtiers } from "@/lib/content";
 import {
@@ -191,6 +192,7 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
       <header className="flex items-center justify-between gap-4 px-6 py-7 md:px-12">
         <Logo />
         <div className="flex items-center gap-5">
+          <SelecteurLangue />
           <p className="text-base text-muted">{t("etapeSur", { etape, total: NOMBRE_QUESTIONS })}</p>
           <button
             type="button"
@@ -599,7 +601,10 @@ function Introduction({
   return (
     <div className="flex min-h-dvh flex-col bg-paper lg:flex-row">
       <main className="flex flex-1 flex-col justify-center gap-7 px-6 py-16 md:px-[72px] [&>*]:animate-descendre [&>*:nth-child(2)]:[--delai:120ms] [&>*:nth-child(3)]:[--delai:240ms] [&>*:nth-child(4)]:[--delai:360ms] [&>*:nth-child(5)]:[--delai:480ms]">
-        <Logo />
+        <div className="flex items-center justify-between gap-4">
+          <Logo />
+          <SelecteurLangue className="flex" />
+        </div>
         <h1
           ref={titreRef}
           tabIndex={-1}

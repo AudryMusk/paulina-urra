@@ -17,7 +17,10 @@
     "proprietes": "Propiedades",
     "equipe": "El equipo",
     "langue": "Idioma",
-    "cta": "Evaluación gratuita"
+    "cta": "Evaluación gratuita",
+    "ctaCourt": "Evaluación",
+    "ouvrirMenu": "Abrir el menú",
+    "fermerMenu": "Cerrar el menú"
   },
   "hero": {
     "alt": "Paulina Urra y Denis Rauda Hernandez en una casa luminosa",

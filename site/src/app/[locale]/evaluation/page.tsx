@@ -3,13 +3,14 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { metadonneesPage } from "@/lib/site";
 import { EvaluationFlow } from "./EvaluationFlow";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/evaluation">): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("evaluationTitre"), description: t("evaluationDescription") };
+  return metadonneesPage("/evaluation", locale, t("evaluationTitre"), t("evaluationDescription"));
 }
 
 export default async function Evaluation({ params, searchParams }: PageProps<"/[locale]/evaluation">) {

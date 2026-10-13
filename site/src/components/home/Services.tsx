@@ -36,7 +36,7 @@ export function Services() {
           {services.map((service, i) => {
             const vedette = i === 0;
             return (
-              <li key={service.cle}>
+              <li key={service.cle} id={service.cle} className="scroll-mt-24">
                 <Reveal delai={i * 90}>
                   <Lien
                     href={service.href}

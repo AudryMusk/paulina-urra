@@ -1,4 +1,5 @@
 import type { Reponses } from "./evaluation";
+import { adresseSite } from "./site";
 
 const echapper = (texte: string) =>
   texte.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -21,7 +22,7 @@ export async function notifierNouvelleDemande(id: string, r: Reponses): Promise<
     return "non-configure";
   }
 
-  const site = process.env.SITE_URL || process.env.URL;
+  const site = adresseSite();
   const lienDossier = URL.canParse(`/admin/dossiers/${id}`, site)
     ? new URL(`/admin/dossiers/${id}`, site).toString()
     : null;

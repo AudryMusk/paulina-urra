@@ -17,7 +17,10 @@
     "proprietes": "Properties",
     "equipe": "Our team",
     "langue": "Language",
-    "cta": "Free evaluation"
+    "cta": "Free evaluation",
+    "ctaCourt": "Evaluation",
+    "ouvrirMenu": "Open menu",
+    "fermerMenu": "Close menu"
   },
   "hero": {
     "alt": "Paulina Urra and Denis Rauda Hernandez in a bright home",
