@@ -63,7 +63,6 @@ export default async function LeadsPage({
             <select name="owner" defaultValue={owner}>
               <option value="">Toute l’équipe</option>
               <option>Paulina</option>
-              <option>Denis</option>
               <option value="sans">À attribuer</option>
             </select>
           </label>

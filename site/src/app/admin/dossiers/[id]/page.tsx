@@ -60,10 +60,6 @@ export default async function DossierPage({ params }: { params: Promise<{ id: st
                 <dd>{answer.langue}</dd>
               </div>
               <div>
-                <dt>Courtier demandé</dt>
-                <dd>{answer.courtier}</dd>
-              </div>
-              <div>
                 <dt>Consentement au contact</dt>
                 <dd>Accepté lors de la demande</dd>
               </div>

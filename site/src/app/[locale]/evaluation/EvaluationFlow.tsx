@@ -34,7 +34,6 @@ import { SelecteurLangue } from "@/components/SelecteurLangue";
 import { useRouter } from "@/i18n/navigation";
 import { courtiers } from "@/lib/content";
 import {
-  courtiersPreferes,
   echeanciers,
   erreurEtape,
   etats,
@@ -339,13 +338,6 @@ function Parcours({ depart, sauvegarder }: { depart: Depart; sauvegarder: boolea
                   valeur={reponses.langue}
                   onChange={(v) => modifier("langue", v)}
                 />
-                <Pastilles
-                  libelle={t("courtier")}
-                  options={courtiersPreferes}
-                  etiquette={(option) => (option === "Peu importe" ? t("peuImporte") : option)}
-                  valeur={reponses.courtier}
-                  onChange={(v) => modifier("courtier", v)}
-                />
                 <label className="flex cursor-pointer items-center gap-3 pt-1 text-lg">
                   <input
                     type="checkbox"
@@ -597,7 +589,7 @@ function Introduction({
 }) {
   const t = useTranslations("evaluation.intro");
   const te = useTranslations("evaluation");
-  const [paulina, denis] = courtiers;
+  const [paulina] = courtiers;
   return (
     <div className="flex min-h-dvh flex-col bg-paper lg:flex-row">
       <main className="flex flex-1 flex-col justify-center gap-7 px-6 py-16 md:px-[72px] [&>*]:animate-descendre [&>*:nth-child(2)]:[--delai:120ms] [&>*:nth-child(3)]:[--delai:240ms] [&>*:nth-child(4)]:[--delai:360ms] [&>*:nth-child(5)]:[--delai:480ms]">
@@ -640,21 +632,17 @@ function Introduction({
       <aside className="flex flex-col justify-center gap-8 bg-mist px-6 py-12 md:px-10 lg:w-[640px] lg:shrink-0">
         <div className="relative aspect-square w-full max-w-[560px] overflow-hidden">
           <Image
-            src="/images/equipe-urra-rauda-duo.jpg"
+            src="/images/paulina-rencontre-detail.jpg"
             alt={t("alt")}
             fill
             preload
             sizes="(min-width: 1024px) 560px, 100vw"
-            className="animate-rideau object-cover object-[80%_center]"
+            className="animate-rideau object-cover object-top"
           />
         </div>
         <div className="flex animate-entrer-droite flex-col gap-4 [--delai:500ms]">
           <p className="font-serif text-[28px] italic text-navy">{t("ecoute")}</p>
-          <p className="text-xl leading-relaxed">
-            Paulina · {paulina.telephone}
-            <br />
-            Denis · {denis.telephone}
-          </p>
+          <p className="text-xl leading-relaxed">Paulina · {paulina.telephone}</p>
         </div>
       </aside>
     </div>

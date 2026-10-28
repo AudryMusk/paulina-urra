@@ -58,7 +58,6 @@ export function FollowupForm({ lead }: { lead: Lead }) {
           <select name="owner" defaultValue={lead.owner}>
             <option value="">À attribuer</option>
             <option>Paulina</option>
-            <option>Denis</option>
           </select>
         </label>
       </div>

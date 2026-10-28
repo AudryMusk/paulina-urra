@@ -1,13 +1,13 @@
 {
   "meta": {
-    "titre": "Équipe Urra-Rauda · Courtiers immobiliers RE/MAX Signature",
-    "description": "Paulina Urra et Denis Rauda Hernandez, courtiers immobiliers résidentiel et commercial à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
-    "evaluationTitre": "Évaluation gratuite · Équipe Urra-Rauda",
-    "evaluationDescription": "Six questions sur votre propriété, puis un appel gratuit de 30 minutes avec Paulina ou Denis pour discuter de votre évaluation."
+    "titre": "Paulina Urra · Courtière immobilière RE/MAX Signature",
+    "description": "Paulina Urra, courtière immobilière résidentiel et commercial à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
+    "evaluationTitre": "Évaluation gratuite · Paulina Urra",
+    "evaluationDescription": "Six questions sur votre propriété, puis un appel gratuit de 30 minutes avec Paulina pour discuter de votre évaluation."
   },
   "logo": {
-    "accueil": "Équipe Urra-Rauda, accueil",
-    "equipe": "ÉQUIPE"
+    "accueil": "Paulina Urra, accueil",
+    "role": "COURTIÈRE IMMOBILIÈRE"
   },
   "entete": {
     "navigation": "Navigation principale",
@@ -15,33 +15,45 @@
     "acheter": "Acheter",
     "commercial": "Commercial",
     "proprietes": "Propriétés",
-    "equipe": "L'équipe",
     "langue": "Langue",
     "cta": "Évaluation gratuite",
     "ctaCourt": "Évaluation",
     "ouvrirMenu": "Ouvrir le menu",
-    "fermerMenu": "Fermer le menu"
+    "fermerMenu": "Fermer le menu",
+    "apropos": "À propos"
   },
   "hero": {
-    "alt": "Paulina Urra et Denis Rauda Hernandez dans une maison lumineuse",
-    "surtitre": "ÉQUIPE URRA-RAUDA · RE/MAX",
+    "alt": "Paulina Urra, courtière immobilière",
+    "surtitre": "PAULINA URRA · RE/MAX SIGNATURE",
     "titre": "Avec vous, du début à la clé.",
-    "texte": "Vendez ou achetez avec Paulina et Denis à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
+    "texte": "Vendez ou achetez avec Paulina Urra à Boucherville, sur la Rive-Sud et dans le Grand Montréal.",
     "langues": "Service en français, en anglais et en espagnol.",
     "cta": "Évaluation gratuite",
-    "equipe": "Notre équipe"
+    "apropos": "À propos"
   },
   "piliers": {
     "titre": "À vos côtés,\nà chaque étape.",
-    "vendre": { "titre": "Vendre", "texte": "Une mise en marché\nsoignée" },
-    "acheter": { "titre": "Acheter", "texte": "Un accompagnement\npersonnalisé" },
-    "evaluer": { "titre": "Évaluer", "texte": "Une analyse de\nvotre marché" },
-    "echanger": { "titre": "Échanger", "texte": "En français, anglais\net espagnol" }
+    "vendre": {
+      "titre": "Vendre",
+      "texte": "Une mise en marché\nsoignée"
+    },
+    "acheter": {
+      "titre": "Acheter",
+      "texte": "Un accompagnement\npersonnalisé"
+    },
+    "evaluer": {
+      "titre": "Évaluer",
+      "texte": "Une analyse de\nvotre marché"
+    },
+    "echanger": {
+      "titre": "Échanger",
+      "texte": "En français, anglais\net espagnol"
+    }
   },
   "services": {
     "label": "SERVICES",
     "titre": "Votre projet,\nnotre accompagnement.",
-    "intro": "Vous échangez directement avec Paulina ou Denis, du premier appel à la remise des clés chez le notaire.",
+    "intro": "Vous échangez directement avec Paulina, du premier appel à la remise des clés chez le notaire.",
     "nouveau": "NOUVEAU",
     "vendre": {
       "titre": "Vendre",
@@ -62,26 +74,6 @@
       "titre": "Évaluer",
       "sousTitre": "Valeur marchande",
       "texte": "Une estimation appuyée sur les ventes comparables de votre secteur, expliquée lors d’un appel de 30 minutes."
-    }
-  },
-  "equipe": {
-    "label": "L'ÉQUIPE",
-    "titre": "Une équipe à l’écoute\nde votre projet.",
-    "intro": "Vendre ou acheter marque une nouvelle étape. Paulina et Denis mettent leurs compétences en commun pour vous guider, répondre à vos questions et suivre votre dossier avec attention.",
-    "paulina": {
-      "role": "Courtière immobilière\nRésidentiel et commercial",
-      "citation": "« Je m'engage à réaliser ce projet efficacement et sans complication. »"
-    },
-    "denis": {
-      "role": "Courtier immobilier\nRésidentiel et commercial",
-      "citation": "« Avec vous, du début à la clé. »"
-    },
-    "langues": "Français · English · Español",
-    "garanties": {
-      "tranquillite": "Programme de protection Tranquilli-T inclus",
-      "integrite": "RE/MAX Intégrité : solution vices cachés",
-      "photos": "Photographie et mise en valeur professionnelles",
-      "reseau": "Réseau de notaires, courtiers hypothécaires et inspecteurs"
     }
   },
   "proprietes": {
@@ -107,14 +99,14 @@
   },
   "temoignages": {
     "label": "TÉMOIGNAGES",
-    "titre": "Ce que nos clients\nretiennent de leur expérience.",
+    "titre": "Ce que mes clients\nretiennent de leur expérience.",
     "etoiles": "5 étoiles sur 5",
     "vedette": {
-      "citation": "« Notre maison était en vente depuis huit mois avec un autre courtier. L'équipe l'a repositionnée, refait les photos, et vendue en trois semaines. »",
+      "citation": "« Notre maison était en vente depuis huit mois avec un autre courtier. Paulina l’a repositionnée, refait les photos, et vendue en trois semaines. »",
       "detail": "Boucherville · vendu en 21 jours"
     },
-    "karim": "« Premiers acheteurs, on ne comprenait rien. Ils nous ont expliqué chaque document, sans jamais nous presser. On s'est sentis protégés. »",
-    "josee": "« Ils ont négocié 18 000 $ de plus que notre meilleure offre initiale. Le calme incarné. »"
+    "karim": "« Premiers acheteurs, on ne comprenait rien. Elle nous a expliqué chaque document, sans jamais nous presser. On s’est sentis protégés. »",
+    "josee": "« Elle a négocié 18 000 $ de plus que notre meilleure offre initiale. Le calme incarné. »"
   },
   "rencontre": {
     "label": "RENCONTREZ PAULINA",
@@ -127,23 +119,38 @@
     },
     "appeler": "Appeler Paulina",
     "instagram": "Suivre sur Instagram",
-    "alt": "Paulina Urra, courtière immobilière chez RE/MAX Signature"
+    "alt": "Paulina Urra, courtière immobilière chez RE/MAX Signature",
+    "garanties": {
+      "tranquillite": "Programme de protection Tranquilli-T inclus",
+      "integrite": "RE/MAX Intégrité : solution vices cachés",
+      "photos": "Photographie et mise en valeur professionnelles",
+      "reseau": "Réseau de notaires, courtiers hypothécaires et inspecteurs"
+    }
   },
   "evaluationCta": {
     "label": "ÉVALUATION GRATUITE",
     "titre": "Combien vaut votre\nmaison aujourd'hui ?",
-    "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina ou Denis pour discuter de votre évaluation.",
-    "temps": { "valeur": "2 min", "libelle": "de votre temps" },
-    "echange": { "valeur": "30 min", "libelle": "pour notre échange" },
-    "gratuit": { "valeur": "0 $", "libelle": "et sans engagement" },
+    "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina pour discuter de votre évaluation.",
+    "temps": {
+      "valeur": "2 min",
+      "libelle": "de votre temps"
+    },
+    "echange": {
+      "valeur": "30 min",
+      "libelle": "pour notre échange"
+    },
+    "gratuit": {
+      "valeur": "0 $",
+      "libelle": "et sans engagement"
+    },
     "adresse": "ADRESSE DE VOTRE PROPRIÉTÉ",
     "placeholder": "Numéro civique, rue, ville",
     "bouton": "Commencer mon évaluation",
-    "traite": "Traité personnellement par Paulina ou Denis.",
+    "traite": "Traité personnellement par Paulina.",
     "coordonnees": "Vos coordonnées servent à préparer votre évaluation."
   },
   "pied": {
-    "description": "Courtiers immobiliers résidentiel et commercial. Membres de l'OACIQ. Franchisé indépendant et autonome de RE/MAX Québec inc.",
+    "description": "Courtière immobilière résidentiel et commercial. Membre de l’OACIQ. Franchisé indépendant et autonome de RE/MAX Québec inc.",
     "cellulaire": "Cellulaire",
     "bureau": "Bureau",
     "bureauTitre": "BUREAU"
@@ -153,8 +160,10 @@
     "etapeSur": "{etape} sur {total}",
     "reprendre": "Reprendre plus tard",
     "merciTitre": "Merci, {prenom}.",
-    "merciTexte": "Votre demande est bien reçue. Paulina ou Denis vous contactera pour fixer votre appel de 30 minutes.",
-    "q1": { "titre": "Quel type de propriété souhaitez-vous faire évaluer ?" },
+    "merciTexte": "Votre demande est bien reçue. Paulina vous contactera pour fixer votre appel de 30 minutes.",
+    "q1": {
+      "titre": "Quel type de propriété souhaitez-vous faire évaluer ?"
+    },
     "q2": {
       "titre": "Quelle est l'adresse de la propriété ?",
       "aide": "Elle nous permet de rechercher les ventes comparables dans votre secteur."
@@ -188,8 +197,6 @@
     "courriel": "Courriel",
     "telephone": "Téléphone",
     "langue": "Langue préférée",
-    "courtier": "Courtier préféré",
-    "peuImporte": "Peu importe",
     "consentement": "J'accepte d'être contacté·e au sujet de mon évaluation.",
     "commercial": "COMMERCIAL",
     "continuer": "Continuer",
@@ -201,33 +208,67 @@
     "suivante": "Question suivante",
     "intro": {
       "titre": "Estimons ensemble la valeur de votre propriété.",
-      "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina ou Denis. Nous vous présenterons une estimation appuyée sur les ventes comparables de votre secteur.",
+      "texte": "Répondez à six questions sur votre propriété, puis choisissez un appel gratuit de 30 minutes avec Paulina. Nous vous présenterons une estimation appuyée sur les ventes comparables de votre secteur.",
       "commencer": "Commencer",
       "questions": "6 questions",
       "engagement": "Sans engagement",
       "appel": "Appel de 30 min",
-      "alt": "Paulina Urra et Denis Rauda Hernandez",
-      "ecoute": "Paulina et Denis, à votre écoute."
+      "alt": "Paulina Urra, courtière immobilière",
+      "ecoute": "Paulina, à votre écoute."
     },
     "typePropriete": {
-      "unifamiliale": { "label": "Maison unifamiliale" },
-      "condo": { "label": "Condo ou appartement" },
-      "plex": { "label": "Plex (2 à 5 logements)" },
-      "immeuble": { "label": "Immeuble à revenus (6 logements et plus)" },
-      "local": { "label": "Local commercial ou industriel" },
-      "autre": { "label": "Terrain, chalet ou autre" }
+      "unifamiliale": {
+        "label": "Maison unifamiliale"
+      },
+      "condo": {
+        "label": "Condo ou appartement"
+      },
+      "plex": {
+        "label": "Plex (2 à 5 logements)"
+      },
+      "immeuble": {
+        "label": "Immeuble à revenus (6 logements et plus)"
+      },
+      "local": {
+        "label": "Local commercial ou industriel"
+      },
+      "autre": {
+        "label": "Terrain, chalet ou autre"
+      }
     },
     "etat": {
-      "cleEnMain": { "label": "Clé en main", "note": "Rénovée récemment, rien à prévoir" },
-      "bon": { "label": "Bon état", "note": "Quelques rafraîchissements à prévoir" },
-      "aRenover": { "label": "À rénover", "note": "Travaux importants : toiture, cuisine, fondation…" },
-      "incertain": { "label": "Je ne sais pas trop", "note": "On en jase lors de l'appel" }
+      "cleEnMain": {
+        "label": "Clé en main",
+        "note": "Rénovée récemment, rien à prévoir"
+      },
+      "bon": {
+        "label": "Bon état",
+        "note": "Quelques rafraîchissements à prévoir"
+      },
+      "aRenover": {
+        "label": "À rénover",
+        "note": "Travaux importants : toiture, cuisine, fondation…"
+      },
+      "incertain": {
+        "label": "Je ne sais pas trop",
+        "note": "On en jase lors de l'appel"
+      }
     },
     "echeancier": {
-      "rapide": { "label": "Le plus tôt possible", "note": "D'ici 3 mois" },
-      "troisSix": { "label": "Dans 3 à 6 mois" },
-      "sixDouze": { "label": "Dans 6 à 12 mois" },
-      "information": { "label": "Je m'informe seulement", "note": "Aucun projet précis pour l'instant" }
+      "rapide": {
+        "label": "Le plus tôt possible",
+        "note": "D'ici 3 mois"
+      },
+      "troisSix": {
+        "label": "Dans 3 à 6 mois"
+      },
+      "sixDouze": {
+        "label": "Dans 6 à 12 mois"
+      },
+      "information": {
+        "label": "Je m'informe seulement",
+        "note": "Aucun projet précis pour l'instant"
+      }
     },
     "erreurs": {
       "typePropriete": "Choisissez un type de propriété pour continuer.",
@@ -246,7 +287,7 @@
       "envoi": "L'envoi a échoué. Réessayez ou appelez-nous directement."
     },
     "agenda": {
-      "intro": "Votre demande est bien reçue. Choisissez maintenant le moment de votre appel de 30 minutes avec Paulina ou Denis.",
+      "intro": "Votre demande est bien reçue. Choisissez maintenant le moment de votre appel de 30 minutes avec Paulina.",
       "chargement": "Recherche des disponibilités…",
       "jours": "Jour de l'appel",
       "heures": "Heure de l'appel",

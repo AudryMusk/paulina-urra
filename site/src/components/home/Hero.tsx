@@ -6,19 +6,20 @@ import { ArrowRight } from "lucide-react";
 export function Hero() {
   const t = useTranslations("hero");
   return (
-    <section className="relative flex flex-col overflow-hidden lg:block lg:h-[560px]">
-      <div className="relative h-[340px] overflow-hidden sm:h-[420px] lg:absolute lg:inset-0 lg:h-full">
+    <section className="flex flex-col lg:h-[580px] lg:flex-row">
+      <div className="relative order-1 h-[420px] overflow-hidden bg-mist sm:h-[500px] lg:order-2 lg:h-full lg:w-[46%] lg:shrink-0">
         <Image
-          src="/images/equipe-urra-rauda-duo.jpg"
+          src="/images/paulina-equipe.jpg"
           alt={t("alt")}
           fill
           preload
-          sizes="100vw"
-          className="animate-zoom-lent object-cover object-[86%_center] lg:object-center"
+          sizes="(min-width: 1024px) 46vw, 100vw"
+          className="animate-rideau object-cover object-top"
         />
+        <span className="absolute top-0 right-0 h-20 w-1.5 bg-red" aria-hidden />
       </div>
-      <div className="relative mx-auto flex h-full w-full max-w-[1440px] items-center px-6 py-12 md:px-10 lg:px-16 lg:py-0">
-        <div className="flex w-full max-w-[430px] flex-col gap-5">
+      <div className="order-2 flex flex-1 items-center bg-paper px-6 py-14 md:px-10 lg:order-1 lg:px-16">
+        <div className="flex w-full max-w-[560px] flex-col gap-5">
           <p className="flex animate-descendre items-center gap-3 text-sm font-semibold tracking-[0.18em] [--delai:150ms]">
             <span className="h-0.5 w-7 bg-red" aria-hidden />
             {t("surtitre")}
@@ -41,10 +42,10 @@ export function Hero() {
               <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-1" aria-hidden />
             </Link>
             <a
-              href="#equipe"
-              className="border border-navy bg-white/90 px-5 py-4 text-lg font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+              href="#apropos"
+              className="border border-navy bg-white px-5 py-4 text-lg font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
             >
-              {t("equipe")}
+              {t("apropos")}
             </a>
           </div>
         </div>

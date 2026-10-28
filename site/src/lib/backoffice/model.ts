@@ -8,7 +8,7 @@ export const statuses = {
 } as const;
 
 export type Status = keyof typeof statuses;
-export const owners = ["", "Paulina", "Denis"] as const;
+export const owners = ["", "Paulina"] as const;
 export type Owner = (typeof owners)[number];
 export function externalUrl(value: string | undefined): string | null {
   if (!value) return null;

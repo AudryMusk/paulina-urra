@@ -24,7 +24,6 @@ export const echeanciers: Option[] = [
 ];
 
 export const langues = ["Français", "English", "Español"] as const;
-export const courtiersPreferes = ["Peu importe", "Paulina", "Denis"] as const;
 
 export type Reponses = {
   typePropriete: string;
@@ -39,7 +38,6 @@ export type Reponses = {
   courriel: string;
   telephone: string;
   langue: (typeof langues)[number];
-  courtier: (typeof courtiersPreferes)[number];
   consentement: boolean;
 };
 
@@ -56,7 +54,6 @@ export const reponsesInitiales: Reponses = {
   courriel: "",
   telephone: "",
   langue: "Français",
-  courtier: "Peu importe",
   consentement: false,
 };
 
@@ -100,7 +97,7 @@ export function erreurEtape(etape: number, r: Reponses): ErreurCle | null {
       if (r.telephone.length > 32 || !/^[+\d\s().-]+$/.test(r.telephone) || chiffres < 10 || chiffres > 15) {
         return "telephone";
       }
-      if (!langues.includes(r.langue) || !courtiersPreferes.includes(r.courtier)) return "preferences";
+      if (!langues.includes(r.langue)) return "preferences";
       return r.consentement ? null : "consentement";
     default:
       return null;

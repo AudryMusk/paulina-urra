@@ -17,14 +17,21 @@ export function SiteFooter() {
       <div className={`${wrap} flex flex-col gap-14 pt-16 pb-8`}>
         <div className="grid gap-10 sm:grid-cols-2 lg:flex lg:gap-8">
           <div className="flex flex-col gap-5 lg:w-60 lg:shrink-0">
-            <Image src="/images/logo-ur.jpg" alt="Équipe Urra-Rauda" width={132} height={138} />
+            <div className="flex items-center gap-3.5">
+              <span className="flex h-10 w-1.5 flex-col" aria-hidden>
+                <span className="flex-1 bg-red" />
+                <span className="flex-1 bg-white/90" />
+                <span className="flex-1 bg-blue" />
+              </span>
+              <span className="font-serif text-[18px] font-semibold tracking-[0.12em] whitespace-nowrap text-white">
+                PAULINA URRA
+              </span>
+            </div>
             <p className="text-base leading-relaxed">{t("description")}</p>
           </div>
           {courtiers.map((courtier) => (
             <div key={courtier.nom} className="flex flex-col gap-3 lg:flex-1">
-              <p className="text-base font-semibold tracking-[0.12em] uppercase">
-                {"nomCourt" in courtier ? courtier.nomCourt : courtier.nom}
-              </p>
+              <p className="text-base font-semibold tracking-[0.12em] uppercase">{courtier.nom}</p>
               <a href={telLink(courtier.telephone)} className="text-lg hover:text-white">
                 {t("cellulaire")} · {courtier.telephone}
               </a>
@@ -61,7 +68,7 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-          <p className="text-base text-white/50">© 2026 Équipe Urra-Rauda</p>
+          <p className="text-base text-white/50">© 2026 Paulina Urra</p>
         </div>
       </div>
     </footer>

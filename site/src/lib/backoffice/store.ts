@@ -37,7 +37,7 @@ export async function createLead(answers: Reponses, submissionKey: string) {
   if (!/^[0-9a-f-]{36}$/i.test(submissionKey)) throw new Error("Référence d’envoi invalide.");
   return transaction(async (q) => {
     const now = new Date().toISOString();
-    const owner = answers.courtier === "Peu importe" ? "" : answers.courtier;
+    const owner: Owner = "Paulina";
     const [created] = await q<{ id: string }>(
       `INSERT INTO leads(id, answers, owner, created_at, updated_at, submission_key) VALUES ($1, $2, $3, $4, $4, $5)
        ON CONFLICT (submission_key) DO NOTHING RETURNING id`,
@@ -176,7 +176,7 @@ export async function listLeads(filters: { q?: string; status?: string; owner?: 
     );
   }
   if (filters.status && Object.hasOwn(statuses, filters.status)) clauses.push("status = " + param(filters.status));
-  if (filters.owner && ["Paulina", "Denis", "sans"].includes(filters.owner)) {
+  if (filters.owner && ["Paulina", "sans"].includes(filters.owner)) {
     clauses.push("owner = " + param(filters.owner === "sans" ? "" : filters.owner));
   }
   const where = clauses.length ? " WHERE " + clauses.join(" AND ") : "";

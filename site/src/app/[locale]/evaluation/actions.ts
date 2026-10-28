@@ -28,7 +28,6 @@ function normaliser(entree: unknown): Reponses {
     courriel: texte(r.courriel).trim(),
     telephone: texte(r.telephone).trim(),
     langue: texte(r.langue) as Reponses["langue"],
-    courtier: texte(r.courtier) as Reponses["courtier"],
     consentement: r.consentement === true,
   };
 }

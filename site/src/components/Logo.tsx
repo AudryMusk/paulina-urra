@@ -11,9 +11,9 @@ export function Logo() {
         <span className="flex-1 bg-blue" />
       </span>
       <span className="flex flex-col gap-[3px]">
-        <span className="text-[10px] font-medium tracking-[0.35em] text-muted">{t("equipe")}</span>
-        <span className="font-serif text-[17px] font-semibold tracking-[0.15em] whitespace-nowrap text-ink">
-          URRA-RAUDA
+        <span className="text-[10px] font-medium tracking-[0.3em] text-muted">{t("role")}</span>
+        <span className="font-serif text-[17px] font-semibold tracking-[0.12em] whitespace-nowrap text-ink">
+          PAULINA URRA
         </span>
       </span>
     </Link>
