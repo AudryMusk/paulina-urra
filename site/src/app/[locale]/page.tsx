@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Equipe } from "@/components/home/Equipe";
 import { EvaluationCta } from "@/components/home/EvaluationCta";
 import { Hero } from "@/components/home/Hero";
 import { Piliers } from "@/components/home/Piliers";
@@ -27,9 +28,10 @@ export default async function Accueil({ params }: PageProps<"/[locale]">) {
         <Hero />
         <Piliers />
         <Services />
-        <Rencontre />
+        <Equipe />
         {proprietes.length > 0 && <Proprietes proprietes={proprietes} />}
         <Temoignages />
+        <Rencontre />
         <EvaluationCta />
       </main>
       <SiteFooter />

@@ -29,6 +29,7 @@ export async function notifierNouvelleDemande(id: string, r: Reponses): Promise<
   const lignes: [string, string][] = [
     ["Téléphone", r.telephone],
     ["Courriel", r.courriel],
+    ["Courtier demandé", r.courtier],
     ["Langue préférée", r.langue],
     ["Type de propriété", r.typePropriete],
     ["Adresse", r.adresse],

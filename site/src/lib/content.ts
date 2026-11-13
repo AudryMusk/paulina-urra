@@ -8,6 +8,16 @@ export const courtiers = [
     telephone: "438 866-2204",
     courriel: "paulina.urra@remax-quebec.com",
   },
+  {
+    cle: "denis",
+    prenom: "Denis",
+    nom: "Denis Enrique Rauda Hernandez",
+    nomCourt: "Denis Rauda Hernandez",
+    photo: "/images/denis-equipe.jpg",
+    avatar: "/images/denis-avatar.jpg",
+    telephone: "514 625-4257",
+    courriel: "denis.raudahernandez@remax-quebec.com",
+  },
 ] as const;
 
 export const bureau = {

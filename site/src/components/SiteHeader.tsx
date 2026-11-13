@@ -12,7 +12,7 @@ const liens = [
   { cle: "acheter", href: "#acheter" },
   { cle: "commercial", href: "#commercial" },
   { cle: "proprietes", href: "#proprietes" },
-  { cle: "apropos", href: "#apropos" },
+  { cle: "equipe", href: "#equipe" },
 ] as const;
 
 export function SiteHeader({ avecProprietes }: { avecProprietes: boolean }) {

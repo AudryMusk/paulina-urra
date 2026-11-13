@@ -1,13 +1,13 @@
 {
   "meta": {
-    "titre": "Paulina Urra · Corredora inmobiliaria RE/MAX Signature",
-    "description": "Paulina Urra, corredora inmobiliaria residencial y comercial en Boucherville, la Rive-Sud y el Gran Montreal.",
-    "evaluationTitre": "Evaluación gratuita · Paulina Urra",
-    "evaluationDescription": "Seis preguntas sobre su propiedad y luego una llamada gratuita de 30 minutos con Paulina para hablar de su evaluación."
+    "titre": "Équipe Urra-Rauda · Corredores inmobiliarios RE/MAX Signature",
+    "description": "Paulina Urra y Denis Rauda Hernandez, corredores inmobiliarios residenciales y comerciales en Boucherville, la Rive-Sud y el Gran Montreal.",
+    "evaluationTitre": "Evaluación gratuita · Équipe Urra-Rauda",
+    "evaluationDescription": "Seis preguntas sobre su propiedad y luego una llamada gratuita de 30 minutos con Paulina o Denis para hablar de su evaluación."
   },
   "logo": {
-    "accueil": "Paulina Urra, inicio",
-    "role": "CORREDORA INMOBILIARIA"
+    "accueil": "Équipe Urra-Rauda, inicio",
+    "equipe": "ÉQUIPE"
   },
   "entete": {
     "navigation": "Navegación principal",
@@ -15,45 +15,33 @@
     "acheter": "Comprar",
     "commercial": "Comercial",
     "proprietes": "Propiedades",
+    "equipe": "El equipo",
     "langue": "Idioma",
     "cta": "Evaluación gratuita",
     "ctaCourt": "Evaluación",
     "ouvrirMenu": "Abrir el menú",
-    "fermerMenu": "Cerrar el menú",
-    "apropos": "Acerca de"
+    "fermerMenu": "Cerrar el menú"
   },
   "hero": {
-    "alt": "Paulina Urra, corredora inmobiliaria",
-    "surtitre": "PAULINA URRA · RE/MAX SIGNATURE",
+    "alt": "Paulina Urra y Denis Rauda Hernandez en una casa luminosa",
+    "surtitre": "ÉQUIPE URRA-RAUDA · RE/MAX",
     "titre": "Con usted, desde el inicio hasta la entrega de llaves.",
-    "texte": "Venda o compre con Paulina Urra en Boucherville, la Rive-Sud y el Gran Montreal.",
+    "texte": "Venda o compre con Paulina y Denis en Boucherville, la Rive-Sud y el Gran Montreal.",
     "langues": "Atención en francés, inglés y español.",
     "cta": "Evaluación gratuita",
-    "apropos": "Acerca de"
+    "equipe": "Nuestro equipo"
   },
   "piliers": {
     "titre": "A su lado,\nen cada etapa.",
-    "vendre": {
-      "titre": "Vender",
-      "texte": "Una comercialización\ncuidada"
-    },
-    "acheter": {
-      "titre": "Comprar",
-      "texte": "Un acompañamiento\npersonalizado"
-    },
-    "evaluer": {
-      "titre": "Evaluar",
-      "texte": "Un análisis de\nsu mercado"
-    },
-    "echanger": {
-      "titre": "Conversar",
-      "texte": "En francés, inglés\ny español"
-    }
+    "vendre": { "titre": "Vender", "texte": "Una comercialización\ncuidada" },
+    "acheter": { "titre": "Comprar", "texte": "Un acompañamiento\npersonalizado" },
+    "evaluer": { "titre": "Evaluar", "texte": "Un análisis de\nsu mercado" },
+    "echanger": { "titre": "Conversar", "texte": "En francés, inglés\ny español" }
   },
   "services": {
     "label": "SERVICIOS",
     "titre": "Su proyecto,\nnuestro acompañamiento.",
-    "intro": "Usted trata directamente con Paulina, desde la primera llamada hasta la entrega de llaves ante el notario.",
+    "intro": "Usted trata directamente con Paulina o Denis, desde la primera llamada hasta la entrega de llaves ante el notario.",
     "nouveau": "NUEVO",
     "vendre": {
       "titre": "Vender",
@@ -74,6 +62,26 @@
       "titre": "Evaluar",
       "sousTitre": "Valor de mercado",
       "texte": "Una estimación basada en las ventas comparables de su zona, explicada durante una llamada de 30 minutos."
+    }
+  },
+  "equipe": {
+    "label": "EL EQUIPO",
+    "titre": "Un equipo que escucha\nsu proyecto.",
+    "intro": "Vender o comprar marca una nueva etapa. Paulina y Denis unen sus competencias para guiarle, responder a sus preguntas y dar un seguimiento atento a su expediente.",
+    "paulina": {
+      "role": "Corredora inmobiliaria\nResidencial y comercial",
+      "citation": "“Me comprometo a realizar su proyecto con eficacia y sin complicaciones.”"
+    },
+    "denis": {
+      "role": "Corredor inmobiliario\nResidencial y comercial",
+      "citation": "“Con usted, desde el inicio hasta la entrega de llaves.”"
+    },
+    "langues": "Français · English · Español",
+    "garanties": {
+      "tranquillite": "Programa de protección Tranquilli-T incluido",
+      "integrite": "RE/MAX Integridad: solución para vicios ocultos",
+      "photos": "Fotografía y presentación profesionales",
+      "reseau": "Red de notarios, corredores hipotecarios e inspectores"
     }
   },
   "proprietes": {
@@ -99,14 +107,14 @@
   },
   "temoignages": {
     "label": "TESTIMONIOS",
-    "titre": "Lo que mis clientes\nrecuerdan de su experiencia.",
+    "titre": "Lo que nuestros clientes\nrecuerdan de su experiencia.",
     "etoiles": "5 de 5 estrellas",
     "vedette": {
-      "citation": "“Nuestra casa llevaba ocho meses en venta con otro corredor. Paulina la reposicionó, rehízo las fotos y la vendió en tres semanas.”",
+      "citation": "“Nuestra casa llevaba ocho meses en venta con otro corredor. El equipo la reposicionó, rehízo las fotos y la vendió en tres semanas.”",
       "detail": "Boucherville · vendida en 21 días"
     },
-    "karim": "“Éramos compradores primerizos y no entendíamos nada. Nos explicó cada documento sin apresurarnos nunca. Nos sentimos protegidos.”",
-    "josee": "“Negoció $18,000 más que nuestra mejor oferta inicial. La calma en persona.”"
+    "karim": "“Éramos compradores primerizos y no entendíamos nada. Nos explicaron cada documento sin apresurarnos nunca. Nos sentimos protegidos.”",
+    "josee": "“Negociaron $18,000 más que nuestra mejor oferta inicial. La calma en persona.”"
   },
   "rencontre": {
     "label": "CONOZCA A PAULINA",
@@ -119,38 +127,23 @@
     },
     "appeler": "Llamar a Paulina",
     "instagram": "Seguir en Instagram",
-    "alt": "Paulina Urra, corredora inmobiliaria en RE/MAX Signature",
-    "garanties": {
-      "tranquillite": "Programa de protección Tranquilli-T incluido",
-      "integrite": "RE/MAX Integridad: solución para vicios ocultos",
-      "photos": "Fotografía y presentación profesionales",
-      "reseau": "Red de notarios, corredores hipotecarios e inspectores"
-    }
+    "alt": "Paulina Urra, corredora inmobiliaria en RE/MAX Signature"
   },
   "evaluationCta": {
     "label": "EVALUACIÓN GRATUITA",
     "titre": "¿Cuánto vale su\ncasa hoy?",
-    "texte": "Responda seis preguntas sobre su propiedad y luego elija una llamada gratuita de 30 minutos con Paulina para hablar de su evaluación.",
-    "temps": {
-      "valeur": "2 min",
-      "libelle": "de su tiempo"
-    },
-    "echange": {
-      "valeur": "30 min",
-      "libelle": "de conversación"
-    },
-    "gratuit": {
-      "valeur": "$0",
-      "libelle": "y sin compromiso"
-    },
+    "texte": "Responda seis preguntas sobre su propiedad y luego elija una llamada gratuita de 30 minutos con Paulina o Denis para hablar de su evaluación.",
+    "temps": { "valeur": "2 min", "libelle": "de su tiempo" },
+    "echange": { "valeur": "30 min", "libelle": "de conversación" },
+    "gratuit": { "valeur": "$0", "libelle": "y sin compromiso" },
     "adresse": "DIRECCIÓN DE SU PROPIEDAD",
     "placeholder": "Número, calle, ciudad",
     "bouton": "Comenzar mi evaluación",
-    "traite": "Atendido personalmente por Paulina.",
+    "traite": "Atendido personalmente por Paulina o Denis.",
     "coordonnees": "Sus datos se usan para preparar su evaluación."
   },
   "pied": {
-    "description": "Corredora inmobiliaria residencial y comercial. Miembro de la OACIQ. Franquicia independiente y autónoma de RE/MAX Québec inc.",
+    "description": "Corredores inmobiliarios residenciales y comerciales. Miembros de la OACIQ. Franquicia independiente y autónoma de RE/MAX Québec inc.",
     "cellulaire": "Celular",
     "bureau": "Oficina",
     "bureauTitre": "OFICINA"
@@ -160,10 +153,8 @@
     "etapeSur": "{etape} de {total}",
     "reprendre": "Continuar más tarde",
     "merciTitre": "Gracias, {prenom}.",
-    "merciTexte": "Hemos recibido su solicitud. Paulina se comunicará con usted para programar su llamada de 30 minutos.",
-    "q1": {
-      "titre": "¿Qué tipo de propiedad desea evaluar?"
-    },
+    "merciTexte": "Hemos recibido su solicitud. Paulina o Denis se comunicará con usted para programar su llamada de 30 minutos.",
+    "q1": { "titre": "¿Qué tipo de propiedad desea evaluar?" },
     "q2": {
       "titre": "¿Cuál es la dirección de la propiedad?",
       "aide": "Nos permite buscar las ventas comparables en su zona."
@@ -197,6 +188,8 @@
     "courriel": "Correo electrónico",
     "telephone": "Teléfono",
     "langue": "Idioma preferido",
+    "courtier": "Corredor preferido",
+    "peuImporte": "Sin preferencia",
     "consentement": "Acepto que me contacten acerca de mi evaluación.",
     "commercial": "COMERCIAL",
     "continuer": "Continuar",
@@ -208,67 +201,33 @@
     "suivante": "Pregunta siguiente",
     "intro": {
       "titre": "Evaluemos juntos el valor de su propiedad.",
-      "texte": "Responda seis preguntas sobre su propiedad y luego elija una llamada gratuita de 30 minutos con Paulina. Le presentaremos una estimación basada en las ventas comparables de su zona.",
+      "texte": "Responda seis preguntas sobre su propiedad y luego elija una llamada gratuita de 30 minutos con Paulina o Denis. Le presentaremos una estimación basada en las ventas comparables de su zona.",
       "commencer": "Comenzar",
       "questions": "6 preguntas",
       "engagement": "Sin compromiso",
       "appel": "Llamada de 30 min",
-      "alt": "Paulina Urra, corredora inmobiliaria",
-      "ecoute": "Paulina, a su disposición."
+      "alt": "Paulina Urra y Denis Rauda Hernandez",
+      "ecoute": "Paulina y Denis, a su disposición."
     },
     "typePropriete": {
-      "unifamiliale": {
-        "label": "Casa unifamiliar"
-      },
-      "condo": {
-        "label": "Condominio o departamento"
-      },
-      "plex": {
-        "label": "Plex (2 a 5 unidades)"
-      },
-      "immeuble": {
-        "label": "Edificio de renta (6 unidades o más)"
-      },
-      "local": {
-        "label": "Local comercial o industrial"
-      },
-      "autre": {
-        "label": "Terreno, cabaña u otro"
-      }
+      "unifamiliale": { "label": "Casa unifamiliar" },
+      "condo": { "label": "Condominio o departamento" },
+      "plex": { "label": "Plex (2 a 5 unidades)" },
+      "immeuble": { "label": "Edificio de renta (6 unidades o más)" },
+      "local": { "label": "Local comercial o industrial" },
+      "autre": { "label": "Terreno, cabaña u otro" }
     },
     "etat": {
-      "cleEnMain": {
-        "label": "Listo para habitar",
-        "note": "Renovado recientemente, nada que prever"
-      },
-      "bon": {
-        "label": "Buen estado",
-        "note": "Algunos retoques por hacer"
-      },
-      "aRenover": {
-        "label": "Para renovar",
-        "note": "Trabajos importantes: techo, cocina, cimientos…"
-      },
-      "incertain": {
-        "label": "No estoy seguro",
-        "note": "Lo hablamos durante la llamada"
-      }
+      "cleEnMain": { "label": "Listo para habitar", "note": "Renovado recientemente, nada que prever" },
+      "bon": { "label": "Buen estado", "note": "Algunos retoques por hacer" },
+      "aRenover": { "label": "Para renovar", "note": "Trabajos importantes: techo, cocina, cimientos…" },
+      "incertain": { "label": "No estoy seguro", "note": "Lo hablamos durante la llamada" }
     },
     "echeancier": {
-      "rapide": {
-        "label": "Lo antes posible",
-        "note": "En los próximos 3 meses"
-      },
-      "troisSix": {
-        "label": "En 3 a 6 meses"
-      },
-      "sixDouze": {
-        "label": "En 6 a 12 meses"
-      },
-      "information": {
-        "label": "Solo me estoy informando",
-        "note": "Sin un proyecto concreto por ahora"
-      }
+      "rapide": { "label": "Lo antes posible", "note": "En los próximos 3 meses" },
+      "troisSix": { "label": "En 3 a 6 meses" },
+      "sixDouze": { "label": "En 6 a 12 meses" },
+      "information": { "label": "Solo me estoy informando", "note": "Sin un proyecto concreto por ahora" }
     },
     "erreurs": {
       "typePropriete": "Elija un tipo de propiedad para continuar.",
@@ -287,7 +246,7 @@
       "envoi": "El envío falló. Inténtelo de nuevo o llámenos directamente."
     },
     "agenda": {
-      "intro": "Hemos recibido su solicitud. Ahora elija el momento de su llamada de 30 minutos con Paulina.",
+      "intro": "Hemos recibido su solicitud. Ahora elija el momento de su llamada de 30 minutos con Paulina o Denis.",
       "chargement": "Buscando horarios disponibles…",
       "jours": "Día de la llamada",
       "heures": "Hora de la llamada",
